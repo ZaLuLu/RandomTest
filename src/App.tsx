@@ -41,13 +41,13 @@ function ScrollToTop() {
     ScrollTrigger.refresh()
 
     const titles: Record<string, string> = {
-      '/': 'Nayak Labs — Developer Tools, Software Engineering & Training',
-      '/products': 'Nayak Labs — Developer Tools & Software Applications',
+      '/': 'Nayak Labs — Software Studio, Platforms & Engineering',
+      '/products': 'Nayak Labs — Products & Platforms — Making complex things feel simple',
       '/services': 'Nayak Labs — Software Engineering Services',
       '/academics': 'Nayak Labs — Technical Training & Mentorship',
       '/coming-soon': 'Nayak Labs — Releasing Soon',
     }
-    document.title = titles[pathname] || 'Nayak Labs — Developer Tools, Software Engineering & Training'
+    document.title = titles[pathname] || 'Nayak Labs — Software Studio, Platforms & Engineering'
   }, [pathname])
   return null
 }
@@ -311,7 +311,7 @@ function GlobalCursor() {
 export default function App() {
   return (
     <ThemeProvider>
-      <BrowserRouter>
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <SEOHead />
         <ScrollToTop />
         <GlobalCursor />

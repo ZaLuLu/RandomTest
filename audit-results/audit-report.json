@@ -1,0 +1,39 @@
+{
+  "consoleErrors": [],
+  "consoleWarnings": [
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5173/products",
+      "text": "WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5173/products",
+      "text": "[.WebGL-0xf7c008c5a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5173/products",
+      "text": "[.WebGL-0xf7c008c5a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5173/products",
+      "text": "[.WebGL-0xf7c008c5a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5173/products",
+      "text": "[.WebGL-0xf7c008c5a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+    },
+    {
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:5173/products",
+      "text": "WebGL: INVALID_OPERATION: drawArrays: no buffer is bound to enabled attribute"
+    }
+  ],
+  "pageErrors": [],
+  "failedRequests": [],
+  "layoutOverflows": [],
+  "interactiveFailures": []
+}

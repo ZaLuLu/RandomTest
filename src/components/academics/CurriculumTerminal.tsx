@@ -5,7 +5,6 @@ import {
   CheckCircle2,
   Play,
   RotateCcw,
-  Sparkles,
   Layers,
   ArrowRight,
   ShieldCheck,
@@ -219,15 +218,15 @@ export function CurriculumTerminal({ activeWeekIndex, onSelectWeek }: Curriculum
         {/* Left Column: Code Inspector (7 cols) */}
         <div className="lg:col-span-7 flex flex-col justify-between p-4 sm:p-5 rounded-2xl card-inset-well font-mono">
           <div>
-            <div className="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-[var(--border-base)] text-xs">
-              <div className="flex items-center gap-2">
-                <Terminal className="w-3.5 h-3.5 text-sky-400" />
-                <span className="text-[var(--text-primary)] font-bold">
-                  src/modules/week_{current.week}_architecture.ts
+            <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[var(--border-base)] text-xs">
+              <div className="flex items-center gap-2 min-w-0">
+                <Terminal className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                <span className="text-[var(--text-primary)] font-bold truncate text-[11px] sm:text-xs">
+                  <span className="hidden sm:inline">src/modules/</span>week_{current.week}_architecture.ts
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] text-sky-400 font-semibold px-2 py-0.5 rounded bg-sky-500/10 border border-sky-500/20">
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="text-[9.5px] sm:text-[10px] text-sky-400 font-semibold px-2 py-0.5 rounded bg-sky-500/10 border border-sky-500/20 whitespace-nowrap">
                   {current.badge}
                 </span>
                 <button

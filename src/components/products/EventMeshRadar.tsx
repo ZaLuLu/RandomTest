@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react'
 import createGlobe from 'cobe'
-import { Calendar, MapPin, Sparkles, Users, ExternalLink, Play, Pause, RotateCw } from 'lucide-react'
+import { Calendar, MapPin, Users, ExternalLink, Play, Pause, RotateCw } from 'lucide-react'
 import { useTheme } from '../../utils/themeContext'
 import { NumberFlow } from '../ui/NumberFlow'
 
@@ -170,7 +170,7 @@ export function EventMeshRadar() {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    let width = canvas.offsetWidth || 500
+    let width = Math.max(260, canvas.offsetWidth || 480)
 
     const globe = createGlobe(canvas, {
       devicePixelRatio: Math.min(window.devicePixelRatio, 2),
@@ -240,7 +240,7 @@ export function EventMeshRadar() {
       clearTimeout(resizeTimer)
       resizeTimer = setTimeout(() => {
         if (canvas) {
-          width = canvas.offsetWidth
+          width = Math.max(260, canvas.offsetWidth || 480)
           globe.update({
             width: width * 2,
             height: width * 2,

@@ -177,7 +177,7 @@ export function TabletHero({ onScrollToDivision }: TabletHeroProps) {
         {/* Quick Identity Breakdown Pills */}
         <div className="flex flex-wrap items-center justify-center gap-2 font-mono text-[10px]">
           <span className="px-2.5 py-1 rounded-lg bg-[var(--bg-card)] border border-[var(--border-base)] text-violet-400 font-bold">
-            Developer Tools
+            Products & Platforms
           </span>
           <span className="px-2.5 py-1 rounded-lg bg-[var(--bg-card)] border border-[var(--border-base)] text-indigo-400 font-bold">
             Engineering Services

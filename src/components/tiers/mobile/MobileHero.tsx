@@ -77,15 +77,15 @@ export function MobileHero({ onScrollToDivision }: MobileHeroProps) {
                 <Terminal className="w-4 h-4" />
               </div>
               <span className="font-mono text-[9.5px] px-2 py-0.5 rounded-md bg-[var(--bg-surface)] border border-[var(--border-base)] text-[var(--accent-primary)] font-bold">
-                Tools
+                Products
               </span>
             </div>
 
             <h2 className="font-display font-bold text-lg text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] transition-colors mb-1">
-              Developer Tools
+              Products & Platforms
             </h2>
             <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-4">
-              Lightweight event brokers, documentation studios, and utilities built for developers.
+              Interactive tools, visual learning platforms, and curated networks built for everyday use.
             </p>
           </div>
 

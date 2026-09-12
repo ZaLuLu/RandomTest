@@ -804,10 +804,10 @@ export function Hero3D({
                     </span>
                   </div>
                   <h3 className="font-display font-bold text-base text-[var(--text-primary)] mb-1">
-                    Developer Tools
+                    Products & Platforms
                   </h3>
                   <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-3">
-                    Lightweight event brokers, documentation studios, and utilities built for developers.
+                    Interactive tools, visual learning platforms, and curated networks built for everyday use.
                   </p>
                 </div>
                 <div className="pt-2.5 border-t border-[var(--border-base)] flex items-center justify-between font-body text-xs text-[var(--accent-primary)] font-semibold">
@@ -1046,10 +1046,10 @@ export function Hero3D({
                   </span>
                 </div>
                 <h3 className="font-display font-bold text-lg text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent-primary)] transition-colors">
-                  Developer Tools
+                  Products & Platforms
                 </h3>
                 <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-4">
-                  Lightweight event brokers, documentation studios, and utilities built for developers.
+                  Interactive tools, visual learning platforms, and curated networks built for everyday use.
                 </p>
               </div>
               <div className="pt-3 border-t border-[var(--border-base)] flex items-center justify-between font-body text-xs text-[var(--accent-primary)] font-semibold group-hover:underline">
@@ -1331,10 +1331,10 @@ export function Hero3D({
                 </span>
               </div>
               <h3 className="font-display font-bold text-lg text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent-primary)] transition-colors">
-                Developer Tools
+                Products & Platforms
               </h3>
               <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-3">
-                Lightweight event brokers, documentation studios, and utilities built for developers.
+                Interactive tools, visual learning platforms, and curated networks built for everyday use.
               </p>
               <div className="flex flex-wrap gap-1.5 font-body text-[11px] text-[var(--text-muted)] mb-3">
                 <span className="px-2 py-0.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-base)]">

@@ -624,10 +624,10 @@ export function DiNotesVisualizer() {
 
       {/* Control Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-[var(--border-base)]">
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <button
             onClick={togglePlay}
-            className="btn-primary py-2 px-3.5 font-bold flex items-center gap-1.5 text-xs cursor-pointer"
+            className="btn-primary py-1.5 sm:py-2 px-2.5 sm:px-3.5 font-bold flex items-center gap-1.5 text-xs cursor-pointer"
           >
             {isPlaying ? (
               <>
@@ -637,7 +637,8 @@ export function DiNotesVisualizer() {
             ) : (
               <>
                 <Play className="w-3.5 h-3.5 fill-current" />
-                <span>RUN EXECUTION</span>
+                <span>RUN</span>
+                <span className="hidden sm:inline">EXECUTION</span>
               </>
             )}
           </button>
@@ -645,7 +646,7 @@ export function DiNotesVisualizer() {
           <button
             onClick={stepBackward}
             disabled={isPlaying}
-            className="btn-ghost py-2 px-2.5 text-xs flex items-center gap-1 disabled:opacity-40 cursor-pointer"
+            className="btn-ghost py-1.5 sm:py-2 px-2 sm:px-2.5 text-xs flex items-center gap-1 disabled:opacity-40 cursor-pointer"
             title="Step Back"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -655,7 +656,7 @@ export function DiNotesVisualizer() {
           <button
             onClick={stepForward}
             disabled={isPlaying}
-            className="btn-ghost py-2 px-2.5 text-xs flex items-center gap-1 disabled:opacity-40 cursor-pointer"
+            className="btn-ghost py-1.5 sm:py-2 px-2 sm:px-2.5 text-xs flex items-center gap-1 disabled:opacity-40 cursor-pointer"
             title="Step Forward"
           >
             <FastForward className="w-3.5 h-3.5" />
@@ -664,7 +665,7 @@ export function DiNotesVisualizer() {
 
           <button
             onClick={reset}
-            className="btn-ghost p-2 text-xs cursor-pointer"
+            className="btn-ghost p-1.5 sm:p-2 text-xs cursor-pointer"
             title="Randomize & Reset Memory"
           >
             <Shuffle className="w-3.5 h-3.5" />
@@ -672,7 +673,7 @@ export function DiNotesVisualizer() {
 
           <button
             onClick={runDuel}
-            className="btn-tactile py-2 px-3 font-bold flex items-center gap-1 text-xs cursor-pointer"
+            className="btn-tactile py-1.5 sm:py-2 px-2.5 sm:px-3 font-bold flex items-center gap-1 text-xs cursor-pointer"
           >
             <Swords className="w-3.5 h-3.5" />
             <span className="hidden md:inline">DUEL BENCHMARK</span>

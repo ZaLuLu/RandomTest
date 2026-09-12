@@ -357,13 +357,16 @@ export default function ProductsPage() {
         </div>
 
         {/* ── BOTTOM CTA ── */}
-        <div className="mt-16 sm:mt-20 text-center">
+        <div className="mt-16 sm:mt-20 text-center px-4">
           <Link
             to="/services"
-            className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm text-[var(--accent-primary)] font-bold hover:underline"
+            className="inline-flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 font-mono text-xs sm:text-sm text-[var(--accent-primary)] font-bold hover:underline"
           >
-            <span>Looking for bespoke custom engineering? Explore Services</span>
-            <ArrowRight className="w-4 h-4" />
+            <span>Looking for bespoke custom engineering?</span>
+            <span className="inline-flex items-center gap-1">
+              <span>Explore Services</span>
+              <ArrowRight className="w-4 h-4 shrink-0" />
+            </span>
           </Link>
         </div>
       </main>

@@ -11,18 +11,18 @@ interface SEOProps {
 
 const ROUTE_SEO: Record<string, { title: string; description: string; keywords: string }> = {
   '/': {
-    title: 'Nayak Labs — Developer Tools, Engineering Services & Technical Training',
+    title: 'Nayak Labs — Software Studio, Platforms & Engineering',
     description:
-      'We build developer tools, deliver full-stack web applications with complete code ownership, and run hands-on technical training for engineers.',
+      'Independent software studio creating interactive platforms, production web software, and hands-on engineering programs.',
     keywords:
-      'Software Studio, Developer Tools, Full-Stack Engineering, FastAPI, Next.js, Technical Training, Nayak Labs',
+      'Software Studio, Platforms, Full-Stack Engineering, FastAPI, Next.js, Interactive Tools, Technical Training, Nayak Labs',
   },
   '/products': {
-    title: 'Developer Tools & Applications — Nayak Labs',
+    title: 'Products & Platforms — Nayak Labs',
     description:
-      'Developer tools engineered for modern builders. Explore Event Mesh (lightweight pub/sub broker) and DI Notes (distraction-free markdown studio).',
+      'Products made for the way you work. Making complex things feel simple. Explore DI Notes sorting visualizer and Event Mesh global event radar.',
     keywords:
-      'Developer Tools, Event Mesh, DI Notes, Event Broker, Markdown Studio, SaaS, Nayak Labs Products',
+      'Software Products, Event Mesh, DI Notes, Visualizer, Interactive Tools, SaaS, Nayak Labs Products',
   },
   '/services': {
     title: 'Software Engineering Services — Nayak Labs',

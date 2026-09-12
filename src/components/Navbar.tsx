@@ -18,10 +18,11 @@ interface NavLinkItem {
 
 // Unified Modern Navigation Hierarchy matching Tablet aesthetic
 const NAV_LINKS: NavLinkItem[] = [
+  { label: 'Home', num: '00', id: 'home', pagePath: '/', isSubpage: false },
   { label: 'Products', num: '01', id: 'products', pagePath: '/products', isSubpage: true },
   { label: 'Services', num: '02', id: 'services', pagePath: '/services', isSubpage: true },
   { label: 'Academics', num: '03', id: 'academics', pagePath: '/academics', isSubpage: true },
-  { label: 'Workflow', num: '04', id: 'why-us', pagePath: '/#why-us', isSubpage: false },
+  { label: 'Workflow', num: '04', id: 'why-us', pagePath: '/', isSubpage: false },
 ]
 
 export function Navbar({ onScrollTo, onReplayIntro }: NavbarProps) {
@@ -30,7 +31,7 @@ export function Navbar({ onScrollTo, onReplayIntro }: NavbarProps) {
 
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState('')
+  const [activeSection, setActiveSection] = useState('home')
   const location = useLocation()
   const navigate = useNavigate()
   const isHome = location.pathname === '/'
@@ -66,19 +67,24 @@ export function Navbar({ onScrollTo, onReplayIntro }: NavbarProps) {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
 
-      const sections = ['why-us']
-      const scrollPos = window.scrollY + 240
+      // Section tracking on homepage:
+      // Highlighting Home when at the top, and Products, Services, Academics, Workflow as user scrolls
+      const scrollPos = window.scrollY + 220
+      const checkSections = ['products', 'services', 'academics', 'why-us']
+      let currentSection = 'home'
 
-      let found = ''
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const id = sections[i]
+      for (let i = checkSections.length - 1; i >= 0; i--) {
+        const id = checkSections[i]
         const el = document.getElementById(id)
-        if (el && scrollPos >= el.offsetTop) {
-          found = id
-          break
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY
+          if (scrollPos >= top) {
+            currentSection = id
+            break
+          }
         }
       }
-      setActiveSection(found)
+      setActiveSection(currentSection)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -125,6 +131,17 @@ export function Navbar({ onScrollTo, onReplayIntro }: NavbarProps) {
 
   const handleNavClick = (link: NavLinkItem) => {
     setMobileOpen(false)
+
+    // Handle Home button click
+    if (link.id === 'home') {
+      if (isHome) {
+        if (onScrollTo) onScrollTo('home')
+        else window.scrollTo({ top: 0, behavior: 'smooth' })
+      } else {
+        navigate('/')
+      }
+      return
+    }
 
     // If clicking a subpage (Products, Services, Academics), route directly to subpage
     if (link.isSubpage) {

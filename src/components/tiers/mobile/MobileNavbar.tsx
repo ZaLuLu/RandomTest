@@ -8,6 +8,7 @@ interface MobileNavbarProps {
 }
 
 const MOBILE_NAV_LINKS = [
+  { label: 'Home', num: '00', id: 'home', pagePath: '/' },
   { label: 'Products', num: '01', id: 'products', pagePath: '/products' },
   { label: 'Services', num: '02', id: 'services', pagePath: '/services' },
   { label: 'Academics', num: '03', id: 'academics', pagePath: '/academics' },
@@ -25,10 +26,23 @@ export function MobileNavbar({ onScrollTo }: MobileNavbarProps) {
 
   const handleLinkClick = (link: typeof MOBILE_NAV_LINKS[0]) => {
     setMenuOpen(false)
+    if (link.id === 'home') {
+      if (isHome) {
+        if (onScrollTo) onScrollTo('home')
+        else window.scrollTo({ top: 0, behavior: 'smooth' })
+      } else {
+        navigate('/')
+      }
+      return
+    }
     if (isHome) {
       if (link.pagePath.startsWith('/#')) {
-        const el = document.getElementById(link.id)
-        el?.scrollIntoView({ behavior: 'smooth' })
+        if (onScrollTo) {
+          onScrollTo(link.id)
+        } else {
+          const el = document.getElementById(link.id)
+          el?.scrollIntoView({ behavior: 'smooth' })
+        }
       } else {
         navigate(link.pagePath)
       }

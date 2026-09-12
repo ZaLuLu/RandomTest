@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useRef, useState, lazy, Suspense } from 'react'
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -56,6 +56,18 @@ function MainLayout() {
   const device = useDeviceProfile()
   const lenisRef = useRef<Lenis | null>(null)
   const location = useLocation()
+  const navigate = useNavigate()
+
+  // Prevent automatic browser scroll restoration on refresh and strip rogue why-us hash
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+    if (window.location.hash === '#why-us') {
+      window.history.replaceState(null, document.title, window.location.pathname)
+    }
+  }, [])
+
   const isDesktopIntroTarget =
     (device.isLaptop || device.isTV || device.isUltrawide) &&
     !device.isMobile &&
@@ -181,18 +193,23 @@ function MainLayout() {
   useEffect(() => {
     const state = location.state as { scrollTo?: string } | null
     if (state?.scrollTo && introFinished) {
+      const targetId = state.scrollTo
+      // Clear navigation state immediately so subsequent refreshes don't auto-jump
+      navigate(location.pathname, { replace: true, state: {} })
       const timer = setTimeout(() => {
-        scrollTo(state.scrollTo!)
-      }, 120)
+        scrollTo(targetId)
+      }, 150)
       return () => clearTimeout(timer)
     }
-  }, [location.state, introFinished, scrollTo])
+  }, [location.state, location.pathname, introFinished, scrollTo, navigate])
 
   const [isIntroHandoff, setIsIntroHandoff] = useState(false)
 
   const handleHandoffStart = useCallback(() => {
     setIsIntroHandoff(true)
     setHeroAwake(true)
+    window.scrollTo({ top: 0, behavior: 'instant' })
+    lenisRef.current?.scrollTo(0, { immediate: true })
   }, [])
 
   const handleWordmarkDocked = useCallback(() => {
@@ -203,6 +220,8 @@ function MainLayout() {
     setIntroFinished(true)
     setForceReplay(false)
     setHeroAwake(true)
+    window.scrollTo({ top: 0, behavior: 'instant' })
+    lenisRef.current?.scrollTo(0, { immediate: true })
   }, [])
 
   const handleReplayIntro = useCallback(() => {

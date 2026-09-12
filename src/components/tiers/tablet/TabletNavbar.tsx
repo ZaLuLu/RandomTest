@@ -15,6 +15,15 @@ export function TabletNavbar({ onScrollTo }: TabletNavbarProps) {
 
   const handleNavClick = (sectionId: string, route?: string) => {
     ambientAudio.playTick()
+    if (sectionId === 'home') {
+      if (location.pathname === '/') {
+        if (onScrollTo) onScrollTo('home')
+        else window.scrollTo({ top: 0, behavior: 'smooth' })
+      } else {
+        navigate('/')
+      }
+      return
+    }
     if (route && location.pathname !== route) {
       navigate(route)
       return
@@ -51,22 +60,37 @@ export function TabletNavbar({ onScrollTo }: TabletNavbarProps) {
         <div className="flex items-center gap-1 font-mono text-[11px] font-semibold text-[var(--text-secondary)]">
           <button
             type="button"
+            onClick={() => handleNavClick('home', '/')}
+            className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
+              location.pathname === '/' ? 'text-[var(--text-primary)] font-bold bg-[var(--bg-surface)]' : 'hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
+            }`}
+          >
+            Home
+          </button>
+          <button
+            type="button"
             onClick={() => handleNavClick('products', '/products')}
-            className="px-2.5 py-1 rounded-lg hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] transition-colors cursor-pointer"
+            className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
+              location.pathname === '/products' ? 'text-[var(--text-primary)] font-bold bg-[var(--bg-surface)]' : 'hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
+            }`}
           >
             Products
           </button>
           <button
             type="button"
             onClick={() => handleNavClick('services', '/services')}
-            className="px-2.5 py-1 rounded-lg hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] transition-colors cursor-pointer"
+            className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
+              location.pathname === '/services' ? 'text-[var(--text-primary)] font-bold bg-[var(--bg-surface)]' : 'hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
+            }`}
           >
             Services
           </button>
           <button
             type="button"
             onClick={() => handleNavClick('academics', '/academics')}
-            className="px-2.5 py-1 rounded-lg hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] transition-colors cursor-pointer"
+            className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
+              location.pathname === '/academics' ? 'text-[var(--text-primary)] font-bold bg-[var(--bg-surface)]' : 'hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
+            }`}
           >
             Academics
           </button>

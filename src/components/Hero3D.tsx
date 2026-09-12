@@ -1,14 +1,17 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowDown, ArrowRight, Terminal, Globe, GraduationCap, Code2, Cpu, Sparkles, Layers, MessageSquare } from 'lucide-react'
+import { ArrowDown, ArrowRight, Terminal, Globe, GraduationCap, Code2, Cpu, Zap, Layers, MessageSquare } from 'lucide-react'
 import { BorderBeam } from './ui/BorderBeam'
 import { CrowdCanvas } from './ui/skiper-ui/skiper39'
 import { useDeviceProfile } from '../utils/useDeviceProfile'
 import { ambientAudio } from '../utils/audioEngine'
 
 gsap.registerPlugin(ScrollTrigger)
+
+// Module-scoped session flag: remains true across client-side React Router navigation, resets only on full page reload
+let hasBouncedInSession = false
 
 interface Hero3DProps {
   visible?: boolean
@@ -30,6 +33,8 @@ export function Hero3D({
   onWordmarkDocked,
 }: Hero3DProps) {
   const device = useDeviceProfile()
+  const location = useLocation()
+  const hasIncomingScroll = !!(location.state as { scrollTo?: string } | null)?.scrollTo
   const containerRef = useRef<HTMLDivElement>(null)
   const wordmarkStageRef = useRef<HTMLDivElement>(null)
   const wordmarkRef = useRef<HTMLHeadingElement>(null)
@@ -43,7 +48,7 @@ export function Hero3D({
   const revealedContentRef = useRef<HTMLDivElement>(null)
   const cardsContainerRef = useRef<HTMLDivElement>(null)
   const cardRefs = useRef<(HTMLAnchorElement | null)[]>([])
-  const hasRevealedRef = useRef(false)
+  const hasRevealedRef = useRef(hasBouncedInSession || hasIncomingScroll)
 
   const [accentIndex, setAccentIndex] = useState(0)
   const [mobileActiveCard, setMobileActiveCard] = useState(0)
@@ -113,12 +118,12 @@ export function Hero3D({
     }
   }
 
-  // Reset reveal state when hero is hidden or when replay initiates
+  // Reset reveal state ONLY when hero is explicitly hidden
   useEffect(() => {
-    if (!visible || !isIntroHandoff) {
+    if (!visible) {
       hasRevealedRef.current = false
     }
-  }, [visible, isIntroHandoff])
+  }, [visible])
 
   // Desktop Pinned Animation & Entrance Timeline
   useEffect(() => {
@@ -174,6 +179,17 @@ export function Hero3D({
         }
 
         // ── CHOREOGRAPHED PROPER FLUID BOUNCING BALL ENTRANCE ──
+        if (hasBouncedInSession || hasIncomingScroll || hasRevealedRef.current) {
+          hasRevealedRef.current = true
+          gsap.set(letters, { opacity: 1, scale: 1, y: 0, filter: 'none' })
+          gsap.set([periodEl, kicker, subline, scrollPrompt, crowdEl], { opacity: 1, scale: 1, y: 0 })
+          if (wordmarkStage) gsap.set(wordmarkStage, { opacity: 0, pointerEvents: 'none' })
+          if (revealedContent) gsap.set(revealedContent, { opacity: 1, y: 0, scale: 1, pointerEvents: 'auto' })
+          if (flyingBall) gsap.set(flyingBall, { opacity: 0 })
+          onWordmarkDocked?.()
+          return
+        }
+
         if (!hasRevealedRef.current) {
           gsap.set(letters, { opacity: 0, scale: 1, y: 10, filter: 'none' })
           gsap.set(periodEl, { opacity: 0, scale: 0 })
@@ -226,6 +242,7 @@ export function Hero3D({
               delay: 0.1, // Subtle natural lag after shutter opens
               onComplete: () => {
                 hasRevealedRef.current = true
+                hasBouncedInSession = true
               },
             })
 
@@ -893,7 +910,7 @@ export function Hero3D({
                 <div className="font-body text-[10px] text-[var(--text-muted)]">Learn from Builders</div>
               </div>
               <div className="p-2.5 rounded-xl glass-panel text-center flex flex-col items-center justify-center">
-                <Sparkles className="w-3.5 h-3.5 text-[var(--accent-primary)] mb-0.5" />
+                <Zap className="w-3.5 h-3.5 text-[var(--accent-primary)] mb-0.5" />
                 <div className="font-body text-xs font-semibold text-[var(--text-primary)]">
                   Working Code
                 </div>
@@ -1122,7 +1139,7 @@ export function Hero3D({
               <div className="font-body text-[10px] text-[var(--text-muted)]">Learn from Builders</div>
             </div>
             <div className="p-3 rounded-2xl glass-panel text-center flex flex-col items-center justify-center">
-              <Sparkles className="w-4 h-4 text-[var(--accent-primary)] mb-1" />
+              <Zap className="w-4 h-4 text-[var(--accent-primary)] mb-1" />
               <div className="font-body text-xs font-semibold text-[var(--text-primary)]">
                 Working Code
               </div>
@@ -1441,7 +1458,7 @@ export function Hero3D({
             <div className="font-body text-[10px] text-[var(--text-muted)]">Learn from Builders</div>
           </div>
           <div className="p-2.5 lg:p-3 rounded-2xl glass-panel specular-border text-center flex flex-col items-center justify-center">
-            <Sparkles className="w-4 h-4 text-[var(--accent-primary)] mb-1" />
+            <Zap className="w-4 h-4 text-[var(--accent-primary)] mb-1" />
             <div className="font-body text-xs font-semibold text-[var(--text-primary)]">
               Working Code
             </div>

@@ -27,68 +27,79 @@ export function About() {
         </ScrollReveal>
       </div>
 
-      <div className="max-w-4xl mb-10">
+      <div className="w-full mb-12">
         <ScrollReveal delay={0.05}>
-          <h2
-            id="about-headline"
-            className="text-section-h md:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight leading-[1.18] mb-4"
-          >
-            Engineering teams that design, build, and ship production software alongside founders.
-          </h2>
+          <div className="max-w-3xl mb-8">
+            <h2
+              id="about-headline"
+              className="text-section-h md:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight leading-[1.18] mb-4"
+            >
+              Engineering teams that design, build, and ship production software alongside founders.
+            </h2>
+            <p className="font-body text-base md:text-lg text-[var(--text-secondary)] leading-relaxed font-normal">
+              No middle layers or abstract presentations. We write clean code, design reliable database schemas, and deploy full-stack applications directly to your cloud accounts.
+            </p>
+          </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.12}>
-          <p className="font-body text-base md:text-lg text-[var(--text-secondary)] leading-relaxed mb-8 font-normal">
-            No middle layers or abstract presentations. We write clean code, design reliable database schemas, and deploy full-stack applications directly to your cloud accounts.
-          </p>
-        </ScrollReveal>
-
-        {/* 3 Core Ethos Pillars */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-5">
+        {/* 3 Core Ethos Pillars - Generous card sizing matching other main sections */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
           <ScrollReveal delay={0.16}>
-            <div className="p-5 rounded-2xl card-tactile drafting-card flex flex-col justify-between h-full transition-all duration-200 hover:-translate-y-1 hover:shadow-xl relative overflow-hidden group">
+            <div className="p-6 sm:p-8 rounded-2xl card-tactile drafting-card flex flex-col justify-between h-full min-h-[240px] sm:min-h-[270px] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl relative overflow-hidden group">
               <div>
-                <div className="p-2.5 rounded-xl bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] w-fit mb-3.5">
-                  <Terminal className="w-4 h-4" />
+                <div className="p-3 rounded-xl bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] w-fit mb-5 ring-1 ring-[var(--accent-primary)]/20 group-hover:scale-105 transition-transform">
+                  <Terminal className="w-5 h-5" />
                 </div>
-                <div className="font-display text-sm font-bold text-[var(--text-primary)] mb-1.5">
+                <div className="font-display text-lg sm:text-xl font-bold text-[var(--text-primary)] mb-2.5">
                   Working Code First
                 </div>
-                <div className="font-body text-xs text-[var(--text-secondary)] leading-relaxed">
-                  Interactive staging builds deployed from week one so you can test real workflows.
+                <div className="font-body text-sm text-[var(--text-secondary)] leading-relaxed">
+                  Interactive staging builds deployed from week one so you can test real workflows, gather user feedback, and iterate quickly.
                 </div>
+              </div>
+              <div className="mt-6 pt-4 border-t border-[var(--border-base)]/60 flex items-center justify-between text-xs font-mono text-[var(--text-muted)]">
+                <span>01 / WORKFLOW</span>
+                <span className="text-[var(--accent-primary)] font-semibold">Continuous Delivery</span>
               </div>
             </div>
           </ScrollReveal>
 
           <ScrollReveal delay={0.20}>
-            <div className="p-5 rounded-2xl card-tactile drafting-card flex flex-col justify-between h-full transition-all duration-200 hover:-translate-y-1 hover:shadow-xl relative overflow-hidden group">
+            <div className="p-6 sm:p-8 rounded-2xl card-tactile drafting-card flex flex-col justify-between h-full min-h-[240px] sm:min-h-[270px] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl relative overflow-hidden group">
               <div>
-                <div className="p-2.5 rounded-xl bg-[var(--accent-secondary)]/10 text-[var(--accent-secondary)] w-fit mb-3.5">
-                  <ShieldCheck className="w-4 h-4" />
+                <div className="p-3 rounded-xl bg-[var(--accent-secondary)]/10 text-[var(--accent-secondary)] w-fit mb-5 ring-1 ring-[var(--accent-secondary)]/20 group-hover:scale-105 transition-transform">
+                  <ShieldCheck className="w-5 h-5" />
                 </div>
-                <div className="font-display text-sm font-bold text-[var(--text-primary)] mb-1.5">
+                <div className="font-display text-lg sm:text-xl font-bold text-[var(--text-primary)] mb-2.5">
                   100% IP & Code Ownership
                 </div>
-                <div className="font-body text-xs text-[var(--text-secondary)] leading-relaxed">
-                  Full control of repositories, databases, environment secrets, and documentation.
+                <div className="font-body text-sm text-[var(--text-secondary)] leading-relaxed">
+                  Full control of repositories, databases, environment secrets, and documentation. Everything resides in your cloud.
                 </div>
+              </div>
+              <div className="mt-6 pt-4 border-t border-[var(--border-base)]/60 flex items-center justify-between text-xs font-mono text-[var(--text-muted)]">
+                <span>02 / OWNERSHIP</span>
+                <span className="text-[var(--accent-secondary)] font-semibold">Full Transparency</span>
               </div>
             </div>
           </ScrollReveal>
 
           <ScrollReveal delay={0.24}>
-            <div className="p-5 rounded-2xl card-tactile drafting-card flex flex-col justify-between h-full transition-all duration-200 hover:-translate-y-1 hover:shadow-xl relative overflow-hidden group">
+            <div className="p-6 sm:p-8 rounded-2xl card-tactile drafting-card flex flex-col justify-between h-full min-h-[240px] sm:min-h-[270px] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl relative overflow-hidden group">
               <div>
-                <div className="p-2.5 rounded-xl bg-[var(--accent-tertiary)]/10 text-[var(--accent-tertiary)] w-fit mb-3.5">
-                  <Layers className="w-4 h-4" />
+                <div className="p-3 rounded-xl bg-[var(--accent-tertiary)]/10 text-[var(--accent-tertiary)] w-fit mb-5 ring-1 ring-[var(--accent-tertiary)]/20 group-hover:scale-105 transition-transform">
+                  <Layers className="w-5 h-5" />
                 </div>
-                <div className="font-display text-sm font-bold text-[var(--text-primary)] mb-1.5">
+                <div className="font-display text-lg sm:text-xl font-bold text-[var(--text-primary)] mb-2.5">
                   Direct Builder Access
                 </div>
-                <div className="font-body text-xs text-[var(--text-secondary)] leading-relaxed">
-                  Direct communication with the engineers architecting and maintaining your codebase.
+                <div className="font-body text-sm text-[var(--text-secondary)] leading-relaxed">
+                  Direct communication with the engineers architecting and maintaining your codebase via shared Slack or Discord channels.
                 </div>
+              </div>
+              <div className="mt-6 pt-4 border-t border-[var(--border-base)]/60 flex items-center justify-between text-xs font-mono text-[var(--text-muted)]">
+                <span>03 / ACCESS</span>
+                <span className="text-[var(--accent-tertiary)] font-semibold">Zero Middlemen</span>
               </div>
             </div>
           </ScrollReveal>

@@ -145,7 +145,7 @@ export function TabletContact() {
 
         {/* 3. LinkedIn */}
         <a
-          href="https://linkedin.com/company/nayaklabs"
+          href="https://www.linkedin.com/company/nayaklabs/"
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => ambientAudio.playTick()}
@@ -153,26 +153,26 @@ export function TabletContact() {
         >
           <div>
             <div className="flex items-center justify-between mb-3">
-              <div className="p-2.5 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400">
+              <div className="p-2.5 rounded-xl bg-[#0A66C2]/10 border border-[#0A66C2]/20 text-[#0A66C2]">
                 <LinkedInIcon className="w-4 h-4" />
               </div>
-              <span className="font-mono text-[9px] px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-400 font-bold border border-sky-500/20">
-                Professional Network
+              <span className="font-mono text-[9px] px-2 py-0.5 rounded-full bg-[#0A66C2]/10 text-[#0A66C2] font-bold border border-[#0A66C2]/20">
+                Company Updates
               </span>
             </div>
 
-            <div className="font-mono text-[9.5px] text-sky-400 font-bold uppercase tracking-wider mb-0.5">
-              Leadership & Research
+            <div className="font-mono text-[9.5px] text-[#0A66C2] font-bold uppercase tracking-wider mb-0.5">
+              Official Page
             </div>
             <h3 className="font-display font-bold text-base sm:text-lg text-[var(--text-primary)] mb-1">
-              Nayak Labs / Nawaz Nayak
+              Nayak Labs
             </h3>
             <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-4">
-              Follow our technical whitepapers, architectural teardowns, and fellowship announcements.
+              Follow our official updates, engineering announcements, and software platform releases.
             </p>
           </div>
 
-          <div className="pt-3 border-t border-[var(--border-base)] flex items-center justify-between font-mono text-xs text-sky-400 font-bold group-hover:underline">
+          <div className="pt-3 border-t border-[var(--border-base)] flex items-center justify-between font-mono text-xs text-[#0A66C2] font-bold group-hover:underline">
             <span>Connect on LinkedIn</span>
             <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </div>

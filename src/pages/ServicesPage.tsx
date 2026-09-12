@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Bot, Globe, Database, Palette, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react'
+import { Bot, Globe, Database, Palette, CheckCircle2, ArrowRight, Layers } from 'lucide-react'
 import { GrainOverlay } from '../components/GrainOverlay'
 import { GlobalCanvasBackground } from '../components/ui/GlobalCanvasBackground'
 import { Footer } from '../components/Footer'
@@ -104,7 +104,7 @@ export default function ServicesPage() {
         {/* ── HEADER BANNER ── */}
         <div className="max-w-3xl mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-base)] bg-[var(--bg-surface)] mb-3 sm:mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-[var(--accent-secondary)]" />
+            <Layers className="w-3.5 h-3.5 text-[var(--accent-secondary)]" />
             <span className="font-mono text-[10px] sm:text-[10.5px] uppercase tracking-widest text-[var(--text-secondary)] font-semibold">
               Engineering Services
             </span>

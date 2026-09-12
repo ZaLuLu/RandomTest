@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Terminal, Globe, Cpu, GraduationCap, CheckCircle2, Sparkles, BookOpen, Layers } from 'lucide-react'
+import { ArrowRight, Terminal, Globe, Cpu, GraduationCap, CheckCircle2, BookOpen, Layers } from 'lucide-react'
 import { DiNotesPreview, EventMeshPreview, FellowshipCodeLabPreview } from '../../products/ProductPreviews'
 import { ambientAudio } from '../../../utils/audioEngine'
 
@@ -11,19 +11,19 @@ export function TabletPillarStack() {
       <section id="products" className="scroll-mt-16">
         <div className="flex items-center justify-between mb-3">
           <span className="font-mono text-[10.5px] px-2.5 py-0.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 font-bold">
-            01 · Developer Tools
+            01 · Products & Platforms
           </span>
-          <span className="font-mono text-[11px] text-[var(--text-muted)]">Live Utilities</span>
+          <span className="font-mono text-[11px] text-[var(--text-muted)]">Live Software</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
               <h2 className="font-display font-black text-xl sm:text-2xl text-[var(--text-primary)] leading-tight mb-2">
-                Tools built for developers and builders.
+                Products made for the way you work.
               </h2>
               <p className="font-body text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed mb-3">
-                Lightweight event brokers, documentation studios, and utilities built for everyday engineering workflows.
+                Making complex things feel simple. Interactive tools, visual learning platforms, and curated networks built for real everyday use.
               </p>
 
               <div className="space-y-1.5 mb-4 font-body text-xs text-[var(--text-primary)]">

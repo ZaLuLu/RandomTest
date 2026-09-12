@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import { Sun, Moon, ArrowRight, Sparkles } from 'lucide-react'
+import { Sun, Moon, ArrowRight } from 'lucide-react'
 import { useTheme } from '../../../utils/themeContext'
 import { ambientAudio } from '../../../utils/audioEngine'
 

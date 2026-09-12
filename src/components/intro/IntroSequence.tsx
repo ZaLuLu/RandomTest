@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useCallback } from 'react'
 import gsap from 'gsap'
 import { useDeviceProfile } from '../../utils/useDeviceProfile'
+import { ambientAudio } from '../../utils/audioEngine'
 
 interface IntroSequenceProps {
   onHandoffStart?: () => void
@@ -38,6 +39,7 @@ export function IntroSequence({ onHandoffStart, onComplete, forceReplay = false 
   const finishIntro = useCallback(() => {
     if (hasFinishedRef.current) return
     hasFinishedRef.current = true
+    ambientAudio.unlock()
     try {
       sessionStorage.setItem('nayak_intro_seen_v2', 'true')
     } catch {
@@ -49,6 +51,7 @@ export function IntroSequence({ onHandoffStart, onComplete, forceReplay = false 
   const handleSkip = useCallback(() => {
     if (hasFinishedRef.current) return
     hasFinishedRef.current = true
+    ambientAudio.unlock()
 
     if (masterTlRef.current) {
       masterTlRef.current.kill()
@@ -231,6 +234,7 @@ export function IntroSequence({ onHandoffStart, onComplete, forceReplay = false 
     <div
       ref={containerRef}
       onClick={handleSkip}
+      onPointerDown={() => ambientAudio.unlock()}
       className="fixed inset-0 z-[300] select-none cursor-pointer pointer-events-auto"
       aria-label="Welcome to Nayak Labs - Click or tap anywhere to skip"
       role="status"
@@ -272,7 +276,7 @@ export function IntroSequence({ onHandoffStart, onComplete, forceReplay = false 
           }}
         />
 
-        {/* Spatial Telemetry HUD */}
+        {/* Spatial Studio HUD */}
         <div
           ref={telemetryRef}
           className="absolute top-5 left-5 sm:top-6 sm:left-6 font-mono text-[10px] sm:text-[11px] text-white/50 tracking-widest pointer-events-none flex items-center gap-2.5"
@@ -281,8 +285,8 @@ export function IntroSequence({ onHandoffStart, onComplete, forceReplay = false 
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8B5CF6] opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#8B5CF6]" />
           </span>
-          <span>LAT 12.9716° N · LNG 77.5946° E //</span>
-          <span className="text-white/80 font-semibold">NAYAK LABS RUNTIME</span>
+          <span>NAYAK LABS ·</span>
+          <span className="text-white/80 font-semibold">INDEPENDENT SOFTWARE STUDIO</span>
         </div>
       </div>
 
@@ -310,7 +314,7 @@ export function IntroSequence({ onHandoffStart, onComplete, forceReplay = false 
 
         <div className="absolute bottom-5 left-5 sm:bottom-6 sm:left-6 font-mono text-[10px] text-white/40 tracking-widest pointer-events-none flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-[#C026D3] shadow-[0_0_8px_#C026D3]" />
-          <span>AUTONOMOUS RUNTIMES · SWISS CODE · 2026</span>
+          <span>BENGALURU, INDIA · 2026</span>
         </div>
       </div>
 

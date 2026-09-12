@@ -21,6 +21,24 @@ function InstagramIcon({ className = 'w-6 h-6' }: { className?: string }) {
   )
 }
 
+function LinkedInIcon({ className = 'w-6 h-6' }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+      <rect width="4" height="12" x="2" y="9" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  )
+}
+
 export function Contact() {
   const [copied, setCopied] = useState(false)
 
@@ -45,6 +63,19 @@ export function Contact() {
       accentColor: 'var(--accent-primary)',
       badgeClass: 'text-[var(--accent-primary)] bg-[var(--accent-primary)]/10 border-[var(--accent-primary)]/20',
       hasCopy: true,
+    },
+    {
+      id: 'linkedin',
+      name: 'LinkedIn',
+      handle: 'company/nayaklabs',
+      badge: 'Company updates',
+      desc: 'Follow our official updates, engineering announcements, partnerships, and executive dispatches.',
+      actionText: 'Connect on LinkedIn',
+      href: 'https://www.linkedin.com/company/nayaklabs/',
+      icon: LinkedInIcon,
+      accentColor: '#0A66C2',
+      badgeClass: 'text-[#0A66C2] bg-[#0A66C2]/10 border-[#0A66C2]/20',
+      hasCopy: false,
     },
     {
       id: 'instagram',
@@ -89,8 +120,8 @@ export function Contact() {
         </ScrollReveal>
 
 
-        {/* 2 High-Impact 3D Tactile Channel Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl">
+        {/* 3 High-Impact 3D Tactile Channel Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-[1240px]">
           {CHANNELS.map((ch, idx) => {
             const IconComponent = ch.icon
             return (

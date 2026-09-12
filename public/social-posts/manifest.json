@@ -1,0 +1,54 @@
+{
+  "posts": [
+    {
+      "id": "post-1",
+      "image": "/social-posts/post-1.png",
+      "caption": "Shipped v2.0 of Event Mesh 3D — interactive event topology with global latency clustering and live hub filtering.",
+      "tag": "#BuildLog",
+      "likesCount": 1420,
+      "commentsCount": 38,
+      "date": "2d ago",
+      "location": "Studio Bengaluru"
+    },
+    {
+      "id": "post-2",
+      "image": "/social-posts/post-2.png",
+      "caption": "Why we rewrote DI Notes visualizer in clean Canvas instead of heavy WebGL: reducing bundle sizes and improving low-end mobile performance.",
+      "tag": "#Architecture",
+      "likesCount": 2380,
+      "commentsCount": 54,
+      "date": "4d ago",
+      "location": "Engineering"
+    },
+    {
+      "id": "post-3",
+      "image": "/social-posts/post-3.png",
+      "caption": "Applications are open for our upcoming engineering cohort. Small groups, live code reviews, and building real production software.",
+      "tag": "#Training",
+      "likesCount": 3120,
+      "commentsCount": 82,
+      "date": "1w ago",
+      "location": "Academy"
+    },
+    {
+      "id": "post-4",
+      "image": "/social-posts/post-4.png",
+      "caption": "Event Mesh crossed 500+ active developer summits, systems workshops, and hackathons listed across tech hubs.",
+      "tag": "#Community",
+      "likesCount": 1890,
+      "commentsCount": 41,
+      "date": "2w ago",
+      "location": "Event Mesh"
+    },
+    {
+      "id": "post-5",
+      "image": "/social-posts/post-5.png",
+      "caption": "How we built an internal ops automation tool for a growing brand in 6 weeks — from scoping to production deployment.",
+      "tag": "#CaseStudy",
+      "likesCount": 4500,
+      "commentsCount": 112,
+      "date": "3w ago",
+      "location": "Services"
+    }
+  ]
+}

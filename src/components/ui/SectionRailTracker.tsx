@@ -91,7 +91,9 @@ export function SectionRailTracker({
       if (currentActive !== prevActiveRef.current) {
         prevActiveRef.current = currentActive
         setActiveSection(currentActive)
-        ambientAudio.playScrollTick(velocity)
+        if (velocity <= 3.5 && !ambientAudio.isSoundSuppressed()) {
+          ambientAudio.playScrollTick(velocity)
+        }
       }
     }
 

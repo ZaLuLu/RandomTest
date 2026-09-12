@@ -112,6 +112,9 @@ function InstagramLogoSvg({ className = 'w-3.5 h-3.5' }: { className?: string })
 }
 
 export function SocialMediaSection() {
+  const [posts, setPosts] = useState<InstagramPost[]>(() =>
+    [...INSTAGRAM_POSTS].sort(() => Math.random() - 0.5)
+  )
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const [likedPosts, setLikedPosts] = useState<Record<string, boolean>>({})
@@ -121,7 +124,37 @@ export function SocialMediaSection() {
   const dragDistance = useRef<number>(0)
   const isDragging = useRef<boolean>(false)
 
-  const total = INSTAGRAM_POSTS.length
+  // Fetch user-uploaded posts from /social-posts/manifest.json
+  useEffect(() => {
+    fetch('/social-posts/manifest.json')
+      .then((res) => {
+        if (!res.ok) throw new Error('No manifest found')
+        return res.json()
+      })
+      .then((data) => {
+        if (data && Array.isArray(data.posts) && data.posts.length > 0) {
+          const mapped: InstagramPost[] = data.posts.map((p: any, idx: number) => ({
+            id: p.id || `uploaded-post-${idx}`,
+            image: p.image || nayakLabsLogoImg,
+            caption: p.caption || '',
+            date: p.date || 'Recent',
+            postUrl: p.postUrl || 'https://www.instagram.com/nayaklabs.ai?stkn=MXd0eGJwcjVvZDB5dw==',
+            tag: p.tag || '#BuildLog',
+            likesCount: p.likesCount || 1200 + Math.floor(Math.random() * 800),
+            commentsCount: p.commentsCount || 20 + Math.floor(Math.random() * 50),
+            slideCount: p.slideCount || '1/4',
+            location: p.location || 'Studio Bengaluru',
+          }))
+          // Randomize / shuffle carousel posts
+          setPosts([...mapped].sort(() => Math.random() - 0.5))
+        }
+      })
+      .catch(() => {
+        // Keep fallback shuffled posts
+      })
+  }, [])
+
+  const total = posts.length
 
   const nextSlide = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % total)
@@ -271,7 +304,7 @@ export function SocialMediaSection() {
             onMouseDown={handleTouchStart}
             onMouseUp={handleTouchEnd}
           >
-            {INSTAGRAM_POSTS.map((item, idx) => {
+            {posts.map((item, idx) => {
               let diff = idx - activeIndex
               if (diff > total / 2) diff -= total
               if (diff < -total / 2) diff += total
@@ -561,7 +594,7 @@ export function SocialMediaSection() {
 
             {/* Centered Stepper Dot Indicators */}
             <div className="flex items-center gap-1.5">
-              {INSTAGRAM_POSTS.map((_, i) => (
+              {posts.map((_, i) => (
                 <button
                   key={i}
                   type="button"

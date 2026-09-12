@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Terminal, Globe, GraduationCap, Code2, Cpu, Sparkles, Layers } from 'lucide-react'
+import { ArrowRight, Terminal, Globe, GraduationCap, Code2, Cpu, Zap, Layers } from 'lucide-react'
 import { SCOPE_BADGES } from '../../../data/divisions'
 
 interface MobileHeroProps {
@@ -16,8 +16,9 @@ export function MobileHero({ onScrollToDivision }: MobileHeroProps) {
         return <Cpu className="w-4 h-4 text-[var(--accent-secondary)]" />
       case 'Layers':
         return <Layers className="w-4 h-4 text-[var(--accent-primary)]" />
+      case 'Zap':
       case 'Sparkles':
-        return <Sparkles className="w-4 h-4 text-[var(--accent-secondary)]" />
+        return <Zap className="w-4 h-4 text-[var(--accent-secondary)]" />
       default:
         return <Code2 className="w-4 h-4" />
     }

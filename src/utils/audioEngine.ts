@@ -9,6 +9,15 @@ class AmbientAudioEngine {
   private listeners: ((playing: boolean) => void)[] = []
   private lastTickTime = 0
   private distortionCurve: Float32Array | null = null
+  private soundSuppressed = false
+
+  public setSoundSuppressed(suppress: boolean) {
+    this.soundSuppressed = suppress
+  }
+
+  public isSoundSuppressed(): boolean {
+    return this.soundSuppressed
+  }
 
   private initContext() {
     if (!this.ctx) {
@@ -150,6 +159,7 @@ class AmbientAudioEngine {
 
   // 2. Mechanical Haptic Scroll-Speed Tick Synthesizer
   public playScrollTick(velocity = 1) {
+    if (this.soundSuppressed) return
     try {
       this.unlock()
       if (!this.ctx) return
@@ -193,6 +203,7 @@ class AmbientAudioEngine {
   // 3. HARD BASS 808 Sub-Kick Synthesizer for Hero Ball Impacts
   // Synthesizes a heavy, saturated 808 sub-bass punch on letter bounces and a massive sub boom on period settle
   public playBounceSound(stepIndex = 0, totalSteps = 9, isPeriod = false) {
+    if (this.soundSuppressed) return
     try {
       this.unlock()
       if (!this.ctx) return

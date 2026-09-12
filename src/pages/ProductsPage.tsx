@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Sparkles, ArrowRight, CheckCircle2, Terminal, Globe } from 'lucide-react'
+import { Layers, ArrowRight, CheckCircle2, Terminal, Globe } from 'lucide-react'
 import { GrainOverlay } from '../components/GrainOverlay'
 import { GlobalCanvasBackground } from '../components/ui/GlobalCanvasBackground'
 import { Footer } from '../components/Footer'
@@ -87,18 +87,18 @@ export default function ProductsPage() {
         <ScrollReveal variant="blur-focus">
           <div className="max-w-3xl mb-8 sm:mb-16">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-base)] bg-[var(--bg-surface)] backdrop-blur-md mb-3 sm:mb-4 shadow-xs">
-              <Sparkles className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
+              <Layers className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
               <span className="font-mono text-[10px] sm:text-[10.5px] uppercase tracking-widest text-[var(--text-secondary)] font-semibold">
-                Developer Tools & Applications
+                Software & Platforms
               </span>
             </div>
 
             <h1 className="font-display font-black text-[clamp(2rem,6vw,4rem)] leading-[1.05] tracking-tight text-[var(--text-primary)] mb-3 sm:mb-4">
-              Software engineered for builders and developers<span className="text-[var(--accent-primary)]">.</span>
+              Products made for the way you work<span className="text-[var(--accent-primary)]">.</span>
             </h1>
 
             <p className="font-body text-xs sm:text-base md:text-lg text-[var(--text-secondary)] leading-relaxed">
-              Explore our developer tools, interactive algorithm visualizers, and event platforms built with production-grade craft.
+              Making complex things feel simple. Interactive learning studios, global event discovery platforms, and focused tools designed for real everyday use.
             </p>
           </div>
         </ScrollReveal>

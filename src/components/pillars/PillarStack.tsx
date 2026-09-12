@@ -8,7 +8,6 @@ import {
   Globe,
   Cpu,
   GraduationCap,
-  Sparkles,
   CheckCircle2,
   Database,
   Bot,
@@ -67,17 +66,17 @@ export function PillarStack() {
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-6 gap-3">
             <ScrollReveal delay={0}>
-              <SectionEyebrow label="Developer Tools" />
+              <SectionEyebrow label="Products" />
             </ScrollReveal>
           </div>
 
           <ScrollReveal delay={0.08}>
             <div className="max-w-3xl mb-8">
               <h2 className="text-section-h font-display font-bold text-[var(--text-primary)] tracking-tight leading-[1.1] mb-3">
-                Tools built for developers and builders.
+                Products made for the way you work.
               </h2>
               <p className="font-body text-base text-[var(--text-secondary)] leading-relaxed">
-                Lightweight event brokers, documentation studios, and utilities built for everyday engineering workflows.
+                Making complex things feel simple. Interactive tools, visual learning platforms, and curated networks built for real everyday use.
               </p>
             </div>
           </ScrollReveal>
@@ -228,14 +227,14 @@ export function PillarStack() {
             >
               <div className="flex items-center gap-4">
                 <div className="p-3.5 rounded-2xl bg-[var(--accent-primary)] text-white shadow-md group-hover:scale-105 group-hover:shadow-[0_0_20px_var(--accent-glow)] transition-all duration-300">
-                  <Sparkles className="w-5 h-5" />
+                  <Layers className="w-5 h-5" />
                 </div>
                 <div>
                   <div className="font-display font-bold text-base text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] transition-colors">
-                    Explore all developer tools & software products
+                    Explore all products & interactive platforms
                   </div>
                   <div className="font-body text-xs text-[var(--text-secondary)]">
-                    Experience lightweight event brokers, focused documentation studios, and developer utilities.
+                    Experience algorithm learning studios, curated event discovery networks, and software applications.
                   </div>
                 </div>
               </div>

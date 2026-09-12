@@ -103,34 +103,48 @@ export function WhyChooseUs() {
 
         {/* Linear Stepper Navigation Bar (3D Tactile Switches) */}
         <ScrollReveal delay={0.12}>
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 p-2 rounded-2xl bg-[var(--bg-surface-inset)] mb-8 border border-[var(--border-base)] shadow-sm">
-            {STEPS.map((step, idx) => {
-              const isActive = activeStepIndex === idx
-              return (
-                <button
-                  key={step.id}
-                  onClick={() => {
-                    setActiveStepIndex(idx)
-                  }}
-                  className={`py-3.5 px-3.5 rounded-xl font-mono text-xs transition-all duration-200 flex flex-col items-start gap-1 cursor-pointer text-left ${isActive
-                      ? 'bg-[var(--bg-surface-elevated)] border border-[var(--accent-primary)]/60 text-[var(--text-primary)] shadow-md translate-y-[-2px] shadow-[0_0_15px_var(--accent-glow)]'
-                      : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-elevated)] hover:-translate-y-0.5'
-                    }`}
-                >
-                  <div className="flex items-center justify-between w-full">
-                    <span className={`font-bold ${isActive ? 'text-[var(--accent-primary)]' : ''}`}>
-                      {step.num}
-                    </span>
-                    <span className="text-[10px] uppercase opacity-70">
-                      {step.timeline.split(' ')[0]}
-                    </span>
-                  </div>
-                  <span className="font-display font-semibold text-xs truncate w-full">
-                    {step.title.split(' ')[0]}
-                  </span>
-                </button>
-              )
-            })}
+          <div className="relative p-2.5 sm:p-3 rounded-2xl bg-gradient-to-r from-violet-500/[0.08] via-indigo-500/[0.05] to-fuchsia-500/[0.08] dark:from-violet-950/40 dark:via-indigo-950/30 dark:to-purple-950/40 backdrop-blur-xl border border-violet-500/25 dark:border-violet-500/35 shadow-[0_8px_30px_rgba(124,58,237,0.12),inset_0_1px_0_rgba(255,255,255,0.4)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] mb-8 overflow-hidden">
+            {/* Ambient Glow Accents */}
+            <div className="absolute -top-10 -left-10 w-36 h-36 bg-violet-500/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-10 -right-10 w-36 h-36 bg-fuchsia-500/15 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="relative z-10 grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-2.5">
+              {STEPS.map((step, idx) => {
+                const isActive = activeStepIndex === idx
+                return (
+                  <button
+                    key={step.id}
+                    onClick={() => {
+                      setActiveStepIndex(idx)
+                    }}
+                    className={`py-3 px-3 sm:py-3.5 sm:px-3.5 rounded-xl font-mono text-xs transition-all duration-200 flex flex-col items-start gap-1 cursor-pointer text-left ${isActive
+                        ? 'bg-[var(--bg-surface-elevated)] border-2 border-[var(--accent-primary)] text-[var(--text-primary)] shadow-[0_4px_20px_rgba(124,58,237,0.3),inset_0_1px_0_rgba(255,255,255,0.4)] translate-y-[-2px]'
+                        : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-white/40 dark:hover:bg-white/5 border border-transparent hover:border-violet-500/20 hover:-translate-y-0.5'
+                      }`}
+                  >
+                    <div className="flex items-center justify-between w-full">
+                      <span className={`px-1.5 py-0.5 rounded text-[11px] font-bold ${isActive
+                          ? 'bg-[var(--accent-primary)] text-white shadow-xs'
+                          : 'bg-black/5 dark:bg-white/5 text-[var(--text-muted)]'
+                        }`}>
+                        {step.num}
+                      </span>
+                      <span className="text-[10px] uppercase font-semibold tracking-wider text-[var(--text-muted)]">
+                        {step.timeline.split(' ')[0]}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1.5 w-full mt-0.5">
+                      {isActive && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] shadow-[0_0_8px_var(--accent-primary)] animate-pulse shrink-0" />
+                      )}
+                      <span className="font-display font-bold text-xs truncate">
+                        {step.title.split(' ')[0]}
+                      </span>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
           </div>
         </ScrollReveal>
 

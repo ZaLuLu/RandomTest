@@ -135,26 +135,26 @@ export function MobileContact() {
 
         {/* LinkedIn Card */}
         <a
-          href="https://linkedin.com/company/nayaklabs"
+          href="https://www.linkedin.com/company/nayaklabs/"
           target="_blank"
           rel="noopener noreferrer"
           className="p-4 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-base)] hover:border-[var(--border-hover)] flex flex-col justify-between active:scale-98 transition-all shadow-xs group"
         >
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-xl bg-sky-500/10 text-sky-400 border border-sky-500/20">
+              <div className="p-2 rounded-xl bg-[#0A66C2]/10 text-[#0A66C2] border border-[#0A66C2]/20">
                 <LinkedInIcon className="w-4 h-4" />
               </div>
               <div>
                 <div className="font-display font-bold text-sm text-[var(--text-primary)]">
-                  Nayak Labs / Nawaz Nayak
+                  Nayak Labs
                 </div>
-                <div className="font-mono text-[9px] text-sky-400 font-medium">Professional Network</div>
+                <div className="font-mono text-[9px] text-[#0A66C2] font-medium">Company Updates</div>
               </div>
             </div>
           </div>
 
-          <div className="pt-2.5 border-t border-[var(--border-base)] flex items-center justify-between font-mono text-xs text-sky-400 font-semibold">
+          <div className="pt-2.5 border-t border-[var(--border-base)] flex items-center justify-between font-mono text-xs text-[#0A66C2] font-semibold">
             <span>Connect on LinkedIn</span>
             <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </div>

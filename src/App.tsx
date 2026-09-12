@@ -24,6 +24,7 @@ import { SectionRailTracker } from './components/ui/SectionRailTracker'
 import { TargetCursor } from './components/ui/react-bits'
 
 import { useDeviceProfile } from './utils/useDeviceProfile'
+import { ambientAudio } from './utils/audioEngine'
 
 import ProductsPage from './pages/ProductsPage'
 import ServicesPage from './pages/ServicesPage'
@@ -196,8 +197,12 @@ function MainLayout() {
       const targetId = state.scrollTo
       // Clear navigation state immediately so subsequent refreshes don't auto-jump
       navigate(location.pathname, { replace: true, state: {} })
+      ambientAudio.setSoundSuppressed(true)
       const timer = setTimeout(() => {
         scrollTo(targetId)
+        setTimeout(() => {
+          ambientAudio.setSoundSuppressed(false)
+        }, 1100)
       }, 150)
       return () => clearTimeout(timer)
     }

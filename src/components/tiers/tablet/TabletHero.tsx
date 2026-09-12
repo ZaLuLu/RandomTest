@@ -128,8 +128,9 @@ export function TabletHero({ onScrollToDivision }: TabletHeroProps) {
         return <Cpu className="w-4 h-4 text-indigo-400" />
       case 'Layers':
         return <Layers className="w-4 h-4 text-sky-400" />
+      case 'Zap':
       case 'Sparkles':
-        return <Sparkles className="w-4 h-4 text-violet-400" />
+        return <Zap className="w-4 h-4 text-violet-400" />
       default:
         return <Code2 className="w-4 h-4" />
     }

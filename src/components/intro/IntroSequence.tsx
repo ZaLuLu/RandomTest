@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from 'react'
+import React, { useRef, useEffect, useCallback, useState } from 'react'
 import gsap from 'gsap'
 import { useDeviceProfile } from '../../utils/useDeviceProfile'
 import { ambientAudio } from '../../utils/audioEngine'
@@ -24,9 +24,18 @@ export function IntroSequence({ onHandoffStart, onComplete, forceReplay = false 
   const bottomPanelRef = useRef<HTMLDivElement>(null)
   const seamRef = useRef<HTMLDivElement>(null)
   const skipBtnRef = useRef<HTMLButtonElement>(null)
+  const topControlsRef = useRef<HTMLDivElement>(null)
   const telemetryRef = useRef<HTMLDivElement>(null)
   const masterTlRef = useRef<gsap.core.Timeline | null>(null)
   const hasFinishedRef = useRef(false)
+  const [audioEnabled, setAudioEnabled] = useState(() => ambientAudio.isAudioActive())
+
+  const handleEnableAudio = useCallback((e?: React.MouseEvent) => {
+    e?.stopPropagation()
+    ambientAudio.unlock()
+    ambientAudio.playBounceSound(2, 10, false)
+    setAudioEnabled(true)
+  }, [])
 
   // Eligible desktop check (Desktop screens >= 1024px, non-touch)
   const isEligibleDesktop =
@@ -62,13 +71,15 @@ export function IntroSequence({ onHandoffStart, onComplete, forceReplay = false 
     const bottomPanel = bottomPanelRef.current
     const seam = seamRef.current
     const skipBtn = skipBtnRef.current
+    const topControls = topControlsRef.current
     const telemetry = telemetryRef.current
     const container = containerRef.current
 
     if (container) container.style.pointerEvents = 'none'
     onHandoffStart?.()
 
-    if (skipBtn) gsap.to(skipBtn, { opacity: 0, duration: 0.1 })
+    if (topControls) gsap.to(topControls, { opacity: 0, duration: 0.1 })
+    else if (skipBtn) gsap.to(skipBtn, { opacity: 0, duration: 0.1 })
     if (telemetry) gsap.to(telemetry, { opacity: 0, duration: 0.1 })
     if (textEl) gsap.to(textEl, { opacity: 0, scale: 0.95, filter: 'blur(10px)', duration: 0.14 })
 
@@ -139,6 +150,7 @@ export function IntroSequence({ onHandoffStart, onComplete, forceReplay = false 
     const bottomPanel = bottomPanelRef.current
     const seam = seamRef.current
     const skipBtn = skipBtnRef.current
+    const topControls = topControlsRef.current
     const telemetry = telemetryRef.current
 
     if (!container || !topPanel || !bottomPanel || !seam) return
@@ -161,10 +173,12 @@ export function IntroSequence({ onHandoffStart, onComplete, forceReplay = false 
       gsap.set(topPanel, { yPercent: 0 })
       gsap.set(bottomPanel, { yPercent: 0 })
       gsap.set(seam, { opacity: 0, scaleX: 0 })
-      if (skipBtn) gsap.set(skipBtn, { opacity: 0, y: -8 })
+      if (topControls) gsap.set(topControls, { opacity: 0, y: -8 })
+      else if (skipBtn) gsap.set(skipBtn, { opacity: 0, y: -8 })
       if (telemetry) gsap.set(telemetry, { opacity: 0, y: 6 })
 
-      if (skipBtn) masterTl.to(skipBtn, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 0.1)
+      if (topControls) masterTl.to(topControls, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 0.1)
+      else if (skipBtn) masterTl.to(skipBtn, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 0.1)
       if (telemetry) masterTl.to(telemetry, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 0.15)
 
       phrases.forEach((phrase, idx) => {
@@ -194,7 +208,8 @@ export function IntroSequence({ onHandoffStart, onComplete, forceReplay = false 
         .to({}, { duration: 0.05 })
         .call(() => {
           if (container) container.style.pointerEvents = 'none'
-          if (skipBtn) gsap.to(skipBtn, { opacity: 0, duration: 0.12 })
+          if (topControls) gsap.to(topControls, { opacity: 0, duration: 0.12 })
+          else if (skipBtn) gsap.to(skipBtn, { opacity: 0, duration: 0.12 })
           if (telemetry) gsap.to(telemetry, { opacity: 0, duration: 0.12 })
         })
         .set(seam, { opacity: 1, scaleX: 0 })
@@ -233,26 +248,44 @@ export function IntroSequence({ onHandoffStart, onComplete, forceReplay = false 
   return (
     <div
       ref={containerRef}
-      onClick={handleSkip}
-      onPointerDown={() => ambientAudio.unlock()}
-      className="fixed inset-0 z-[300] select-none cursor-pointer pointer-events-auto"
-      aria-label="Welcome to Nayak Labs - Click or tap anywhere to skip"
+      onPointerDown={() => {
+        ambientAudio.unlock()
+        setAudioEnabled(true)
+      }}
+      onClick={() => {
+        ambientAudio.unlock()
+        setAudioEnabled(true)
+      }}
+      className="fixed inset-0 z-[300] select-none pointer-events-auto"
+      aria-label="Welcome to Nayak Labs"
       role="status"
     >
-      {/* Skip button for immediate visitor control */}
-      <button
-        ref={skipBtnRef}
-        onClick={(e) => {
-          e.stopPropagation()
-          handleSkip()
-        }}
-        className="absolute top-5 right-5 sm:top-6 sm:right-6 z-50 px-3.5 py-1.5 rounded-full border border-white/20 bg-black/60 hover:bg-white/10 text-white/90 hover:text-white font-body text-xs font-semibold tracking-wide transition-all cursor-pointer backdrop-blur-md shadow-lg flex items-center gap-2"
-        aria-label="Skip introductory animation"
-      >
-        <span>Skip</span>
-        <span className="text-white/40 text-[10px] font-mono">[ESC]</span>
-        <span>→</span>
-      </button>
+      {/* Top action controls: Sound toggle & Skip button */}
+      <div ref={topControlsRef} className="absolute top-5 right-5 sm:top-6 sm:right-6 z-50 flex items-center gap-2.5">
+        <button
+          type="button"
+          onClick={handleEnableAudio}
+          className="px-3 py-1.5 rounded-full border border-white/20 bg-black/60 hover:bg-white/10 text-white/90 hover:text-white font-mono text-[11px] font-medium tracking-wide transition-all cursor-pointer backdrop-blur-md shadow-lg flex items-center gap-2"
+          aria-label={audioEnabled ? 'Sound active' : 'Click to enable sound'}
+        >
+          <span className={`w-1.5 h-1.5 rounded-full ${audioEnabled ? 'bg-emerald-400 shadow-[0_0_8px_#34d399]' : 'bg-amber-400 animate-pulse'}`} />
+          <span>{audioEnabled ? 'Sound Active' : 'Enable Sound 🔊'}</span>
+        </button>
+
+        <button
+          ref={skipBtnRef}
+          onClick={(e) => {
+            e.stopPropagation()
+            handleSkip()
+          }}
+          className="px-3.5 py-1.5 rounded-full border border-white/20 bg-black/60 hover:bg-white/10 text-white/90 hover:text-white font-body text-xs font-semibold tracking-wide transition-all cursor-pointer backdrop-blur-md shadow-lg flex items-center gap-2"
+          aria-label="Skip introductory animation"
+        >
+          <span>Skip</span>
+          <span className="text-white/40 text-[10px] font-mono">[ESC]</span>
+          <span>→</span>
+        </button>
+      </div>
 
       {/* Top half-panel */}
       <div

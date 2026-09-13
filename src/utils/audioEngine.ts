@@ -10,6 +10,7 @@ class AmbientAudioEngine {
   private lastTickTime = 0
   private distortionCurve: Float32Array | null = null
   private soundSuppressed = false
+  private pendingBounceChime = false
 
   public setSoundSuppressed(suppress: boolean) {
     this.soundSuppressed = suppress
@@ -33,11 +34,28 @@ class AmbientAudioEngine {
     }
   }
 
+  public isAudioActive(): boolean {
+    return Boolean(this.ctx && this.ctx.state === 'running')
+  }
+
   public unlock() {
     try {
       this.initContext()
       if (this.ctx && this.ctx.state === 'suspended') {
-        this.ctx.resume().catch(() => {})
+        this.ctx
+          .resume()
+          .then(() => {
+            if (this.pendingBounceChime) {
+              this.pendingBounceChime = false
+              this.playBounceSound(10, 10, true)
+            }
+          })
+          .catch(() => {})
+      } else if (this.ctx && this.ctx.state === 'running') {
+        if (this.pendingBounceChime) {
+          this.pendingBounceChime = false
+          this.playBounceSound(10, 10, true)
+        }
       }
     } catch (_) {}
   }
@@ -200,101 +218,141 @@ class AmbientAudioEngine {
     this.playScrollTick(1.2)
   }
 
-  // 3. HARD BASS 808 Sub-Kick Synthesizer for Hero Ball Impacts
-  // Synthesizes a heavy, saturated 808 sub-bass punch on letter bounces and a massive sub boom on period settle
+  // 3. WATER-FILLED GLASS JUG & METALLIC SPOON SYNTHESIZER
+  // Accurately models the physical acoustics of a metal spoon striking a water-filled glass jug:
+  // - High-frequency metallic spoon strike transient (sharp ping: 3800Hz -> 1600Hz in 12ms)
+  // - Dual inharmonic glass ring modes (fundamental + 2.32x lip overtone)
+  // - Water-damped liquid resonance with high-Q crystal bandpass filter
   public playBounceSound(stepIndex = 0, totalSteps = 9, isPeriod = false) {
     if (this.soundSuppressed) return
     try {
       this.unlock()
       if (!this.ctx) return
 
+      if (this.ctx.state === 'suspended') {
+        if (isPeriod || stepIndex >= 8) {
+          this.pendingBounceChime = true
+        }
+        return
+      }
+
       const now = this.ctx.currentTime
 
       if (isPeriod) {
-        // ── MASSIVE 808 SUB BOOM (PERIOD LOCK) ──
-        // Sub oscillator: deep frequency drop from 135Hz to 32Hz
-        const subOsc = this.ctx.createOscillator()
-        subOsc.type = 'sine'
-        subOsc.frequency.setValueAtTime(140, now)
-        subOsc.frequency.exponentialRampToValueAtTime(34, now + 0.26)
+        // ── DEEP WATER JUG CARILLON CHIME (PERIOD FINAL LOCK) ──
+        const fundamental = 528 // 528Hz Solfeggio deep liquid glass bell
 
-        // Punch body oscillator for tactile knock
-        const punchOsc = this.ctx.createOscillator()
-        punchOsc.type = 'triangle'
-        punchOsc.frequency.setValueAtTime(85, now)
-        punchOsc.frequency.exponentialRampToValueAtTime(28, now + 0.16)
+        // 1. Metal spoon strike click transient
+        const spoonOsc = this.ctx.createOscillator()
+        const spoonGain = this.ctx.createGain()
+        spoonOsc.type = 'triangle'
+        spoonOsc.frequency.setValueAtTime(3200, now)
+        spoonOsc.frequency.exponentialRampToValueAtTime(1400, now + 0.015)
 
-        // Bass saturation waveshaper for rich harmonics
-        const shaper = this.ctx.createWaveShaper()
-        shaper.curve = this.getDistortionCurve(25)
-        shaper.oversample = '2x'
+        spoonGain.gain.setValueAtTime(0.001, now)
+        spoonGain.gain.linearRampToValueAtTime(0.35, now + 0.001)
+        spoonGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.02)
 
-        // Resonant sub-bass lowpass filter
-        const filter = this.ctx.createBiquadFilter()
-        filter.type = 'lowpass'
-        filter.frequency.setValueAtTime(260, now)
-        filter.frequency.exponentialRampToValueAtTime(75, now + 0.28)
-        filter.Q.setValueAtTime(3.5, now)
+        spoonOsc.connect(spoonGain)
+        spoonGain.connect(this.ctx.destination)
+        spoonOsc.start(now)
+        spoonOsc.stop(now + 0.025)
 
-        // Hard punch gain envelope
-        const gain = this.ctx.createGain()
-        gain.gain.setValueAtTime(0.001, now)
-        gain.gain.linearRampToValueAtTime(0.55, now + 0.003) // Heavy instant attack
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.32) // Fat 808 decay
+        // 2. Main liquid glass resonance (Sine fundamental with water micro-pitch drift)
+        const glassOsc = this.ctx.createOscillator()
+        const glassGain = this.ctx.createGain()
+        glassOsc.type = 'sine'
+        glassOsc.frequency.setValueAtTime(fundamental + 12, now) // initial liquid impact drift
+        glassOsc.frequency.exponentialRampToValueAtTime(fundamental, now + 0.04)
 
-        subOsc.connect(shaper)
-        punchOsc.connect(shaper)
-        shaper.connect(filter)
-        filter.connect(gain)
-        gain.connect(this.ctx.destination)
+        // 3. Inharmonic glass overtone mode (2.32x lip resonance)
+        const overtoneOsc = this.ctx.createOscillator()
+        const overtoneGain = this.ctx.createGain()
+        overtoneOsc.type = 'sine'
+        overtoneOsc.frequency.setValueAtTime(fundamental * 2.32, now)
 
-        subOsc.start(now)
-        punchOsc.start(now)
-        subOsc.stop(now + 0.35)
-        punchOsc.stop(now + 0.35)
+        // Resonant crystal filter
+        const glassFilter = this.ctx.createBiquadFilter()
+        glassFilter.type = 'bandpass'
+        glassFilter.frequency.setValueAtTime(fundamental * 1.1, now)
+        glassFilter.Q.setValueAtTime(7.0, now)
+
+        glassGain.gain.setValueAtTime(0.001, now)
+        glassGain.gain.linearRampToValueAtTime(0.48, now + 0.002)
+        glassGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.65) // Ethereal glass ring
+
+        overtoneGain.gain.setValueAtTime(0.001, now)
+        overtoneGain.gain.linearRampToValueAtTime(0.18, now + 0.002)
+        overtoneGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22) // Water quickly absorbs overtone
+
+        glassOsc.connect(glassFilter)
+        overtoneOsc.connect(glassFilter)
+        glassFilter.connect(glassGain)
+        glassGain.connect(this.ctx.destination)
+
+        glassOsc.start(now)
+        overtoneOsc.start(now)
+        glassOsc.stop(now + 0.7)
+        overtoneOsc.stop(now + 0.25)
       } else {
-        // ── HARD BASS 808 PUNCH (LETTER IMPACTS) ──
-        // Dynamic pitch tuned per letter for progressive cadence
-        const progress = Math.min(1, Math.max(0, stepIndex / Math.max(1, totalSteps - 1)))
-        const startPitch = 165 + progress * 35 // 165Hz -> 200Hz punch start
-        const endPitch = 44 + progress * 8 // 44Hz -> 52Hz deep sub
+        // ── PENTATONIC GLASS WATER JUG CHIMES (STEPS 0..9) ──
+        // Simulates striking crystal water glasses with varying water levels (ascending pentatonic notes)
+        const GLASS_SCALE = [740, 830, 988, 1108, 1244, 988, 1108, 1244, 1480, 1660]
+        const fundamental = GLASS_SCALE[stepIndex % GLASS_SCALE.length] || 880
 
-        const subOsc = this.ctx.createOscillator()
-        subOsc.type = 'sine'
-        subOsc.frequency.setValueAtTime(startPitch, now)
-        subOsc.frequency.exponentialRampToValueAtTime(endPitch, now + 0.075)
+        // 1. Sharp spoon clink transient (metallic tap)
+        const spoonOsc = this.ctx.createOscillator()
+        const spoonGain = this.ctx.createGain()
+        spoonOsc.type = 'triangle'
+        spoonOsc.frequency.setValueAtTime(fundamental * 3.4, now)
+        spoonOsc.frequency.exponentialRampToValueAtTime(fundamental * 1.6, now + 0.012)
 
-        // Hard transient click for punchy impact attack
-        const clickOsc = this.ctx.createOscillator()
-        clickOsc.type = 'triangle'
-        clickOsc.frequency.setValueAtTime(startPitch * 1.8, now)
-        clickOsc.frequency.exponentialRampToValueAtTime(60, now + 0.025)
+        spoonGain.gain.setValueAtTime(0.001, now)
+        spoonGain.gain.linearRampToValueAtTime(0.28, now + 0.001)
+        spoonGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.015)
 
-        const shaper = this.ctx.createWaveShaper()
-        shaper.curve = this.getDistortionCurve(18)
-        shaper.oversample = '2x'
+        spoonOsc.connect(spoonGain)
+        spoonGain.connect(this.ctx.destination)
+        spoonOsc.start(now)
+        spoonOsc.stop(now + 0.02)
 
-        const filter = this.ctx.createBiquadFilter()
-        filter.type = 'lowpass'
-        filter.frequency.setValueAtTime(420, now)
-        filter.frequency.exponentialRampToValueAtTime(110, now + 0.09)
-        filter.Q.setValueAtTime(2.8, now)
+        // 2. Crystal glass singing tone (fundamental with water micro-settle)
+        const glassOsc = this.ctx.createOscillator()
+        const glassGain = this.ctx.createGain()
+        glassOsc.type = 'sine'
+        glassOsc.frequency.setValueAtTime(fundamental + 8, now)
+        glassOsc.frequency.exponentialRampToValueAtTime(fundamental, now + 0.025)
 
-        const gain = this.ctx.createGain()
-        gain.gain.setValueAtTime(0.001, now)
-        gain.gain.linearRampToValueAtTime(0.45, now + 0.002) // Snappy hard bass hit
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.095) // Punchy decay
+        // 3. High glass rim shimmer mode (2.32x inharmonic overtone)
+        const overtoneOsc = this.ctx.createOscillator()
+        const overtoneGain = this.ctx.createGain()
+        overtoneOsc.type = 'sine'
+        overtoneOsc.frequency.setValueAtTime(fundamental * 2.32, now)
 
-        subOsc.connect(shaper)
-        clickOsc.connect(shaper)
-        shaper.connect(filter)
-        filter.connect(gain)
-        gain.connect(this.ctx.destination)
+        const glassFilter = this.ctx.createBiquadFilter()
+        glassFilter.type = 'bandpass'
+        glassFilter.frequency.setValueAtTime(fundamental, now)
+        glassFilter.Q.setValueAtTime(8.5, now)
 
-        subOsc.start(now)
-        clickOsc.start(now)
-        subOsc.stop(now + 0.11)
-        clickOsc.stop(now + 0.11)
+        // Envelope: Crisp instant tap followed by a singing crystal decay (0.28s - 0.36s)
+        const decayDuration = 0.28 + (stepIndex / 10) * 0.08
+        glassGain.gain.setValueAtTime(0.001, now)
+        glassGain.gain.linearRampToValueAtTime(0.38, now + 0.001)
+        glassGain.gain.exponentialRampToValueAtTime(0.0001, now + decayDuration)
+
+        overtoneGain.gain.setValueAtTime(0.001, now)
+        overtoneGain.gain.linearRampToValueAtTime(0.14, now + 0.001)
+        overtoneGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12)
+
+        glassOsc.connect(glassFilter)
+        overtoneOsc.connect(glassFilter)
+        glassFilter.connect(glassGain)
+        glassGain.connect(this.ctx.destination)
+
+        glassOsc.start(now)
+        overtoneOsc.start(now)
+        glassOsc.stop(now + decayDuration + 0.02)
+        overtoneOsc.stop(now + 0.14)
       }
     } catch (_) {}
   }
@@ -312,5 +370,8 @@ if (typeof window !== 'undefined') {
   window.addEventListener('touchstart', unlock, { passive: true })
   window.addEventListener('click', unlock, { passive: true })
   window.addEventListener('wheel', unlock, { passive: true })
+  window.addEventListener('pointermove', unlock, { passive: true, once: true })
+  window.addEventListener('mousemove', unlock, { passive: true, once: true })
+  window.addEventListener('focus', unlock, { passive: true })
 }
 

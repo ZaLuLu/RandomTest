@@ -178,8 +178,8 @@ export function Hero3D({
           return
         }
 
-        // ── CHOREOGRAPHED PROPER FLUID BOUNCING BALL ENTRANCE ──
-        if (hasBouncedInSession || hasIncomingScroll || hasRevealedRef.current) {
+        // ── TARGETED JUMP FROM SUBPAGE (e.g. to #workflow) ──
+        if (hasIncomingScroll) {
           hasRevealedRef.current = true
           gsap.set(letters, { opacity: 1, scale: 1, y: 0, filter: 'none' })
           gsap.set([periodEl, kicker, subline, scrollPrompt, crowdEl], { opacity: 1, scale: 1, y: 0 })
@@ -190,11 +190,25 @@ export function Hero3D({
           return
         }
 
-        if (!hasRevealedRef.current) {
+        // ── RETURNING TO HOMEPAGE IN EXISTING SESSION ──
+        // Keep Nayak Labs hero fully visible at top; PSA cards are revealed as visitor scrolls
+        if (hasBouncedInSession || hasRevealedRef.current) {
+          hasRevealedRef.current = true
+          if (wordmarkStage) gsap.set(wordmarkStage, { opacity: 1, pointerEvents: 'auto' })
+          if (wordmark) gsap.set(wordmark, { opacity: 1, scale: 1, y: 0 })
+          gsap.set(letters, { opacity: 1, scale: 1, y: 0, filter: 'none' })
+          gsap.set([periodEl, kicker, subline, scrollPrompt, crowdEl], { opacity: 1, scale: 1, y: 0 })
+          if (revealedContent) gsap.set(revealedContent, { opacity: 0, scale: 0.94, y: 36, pointerEvents: 'none' })
+          if (flyingBall) gsap.set(flyingBall, { opacity: 0 })
+          onWordmarkDocked?.()
+          // Do NOT return: masterTl below will create the scroll-pinned scrub interaction
+        } else {
           gsap.set(letters, { opacity: 0, scale: 1, y: 10, filter: 'none' })
           gsap.set(periodEl, { opacity: 0, scale: 0 })
           gsap.set([kicker, subline, scrollPrompt, crowdEl], { opacity: 0, y: 14 })
-          gsap.set(revealedContent, { opacity: 0, scale: 0.94, y: 30, pointerEvents: 'none' })
+          if (wordmarkStage) gsap.set(wordmarkStage, { opacity: 1, pointerEvents: 'auto' })
+          if (wordmark) gsap.set(wordmark, { opacity: 1, scale: 1, y: 0 })
+          gsap.set(revealedContent, { opacity: 0, scale: 0.94, y: 36, pointerEvents: 'none' })
           if (flyingBall) gsap.set(flyingBall, { opacity: 0, scale: 0 })
 
           if (!isIntroHandoff && !visible) {
@@ -531,11 +545,6 @@ export function Hero3D({
           }
 
           entranceTimer = setTimeout(startBounceChoreography, 40)
-        } else {
-          gsap.set(letters, { opacity: 1, scale: 1, y: 0, filter: 'none' })
-          gsap.set([periodEl, kicker, subline, scrollPrompt, crowdEl], { opacity: 1, y: 0 })
-          gsap.set(revealedContent, { opacity: 0, scale: 0.94, y: 30, pointerEvents: 'none' })
-          if (flyingBall) gsap.set(flyingBall, { opacity: 0 })
         }
 
         // ── MASTER PINNED SCROLLTRIGGER SCRUB TIMELINE (DESKTOP / LAPTOP) ──

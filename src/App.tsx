@@ -205,6 +205,9 @@ function MainLayout() {
         }, 1100)
       }, 150)
       return () => clearTimeout(timer)
+    } else if (location.pathname === '/' && !state?.scrollTo) {
+      window.scrollTo({ top: 0, behavior: 'instant' })
+      lenisRef.current?.scrollTo(0, { immediate: true })
     }
   }, [location.state, location.pathname, introFinished, scrollTo, navigate])
 

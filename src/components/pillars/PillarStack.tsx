@@ -20,20 +20,33 @@ import {
 
 export function PillarStack() {
   // Mini interactive state for DI Notes on-card visualizer
-  const [arrayState, setArrayState] = useState([38, 72, 19, 94, 55, 27])
+  const INITIAL_ARRAY = [38, 72, 19, 94, 55, 27]
+  const [arrayState, setArrayState] = useState<number[]>([...INITIAL_ARRAY])
+  const [comparingIdx, setComparingIdx] = useState<[number, number]>([0, 1])
+  const [swappedPair, setSwappedPair] = useState<[number, number] | null>(null)
   const [stepCount, setStepCount] = useState(0)
+  const [stepMessage, setStepMessage] = useState('Comparing [38] and [72]')
 
   const handleStepSort = () => {
     setArrayState((prev) => {
       const arr = [...prev]
-      // One step of bubble sort pass
+      let swapped = false
       for (let i = 0; i < arr.length - 1; i++) {
         if (arr[i] > arr[i + 1]) {
           const temp = arr[i]
           arr[i] = arr[i + 1]
           arr[i + 1] = temp
+          setComparingIdx([i, i + 1])
+          setSwappedPair([i, i + 1])
+          setStepMessage(`Swapped ${temp} ↔ ${arr[i]}`)
+          swapped = true
           break
         }
+      }
+      if (!swapped) {
+        setComparingIdx([0, 1])
+        setSwappedPair(null)
+        setStepMessage('Array in sorted order!')
       }
       return arr
     })
@@ -41,17 +54,39 @@ export function PillarStack() {
   }
 
   const handleResetSort = () => {
-    setArrayState([38, 72, 19, 94, 55, 27])
+    setArrayState([...INITIAL_ARRAY])
+    setComparingIdx([0, 1])
+    setSwappedPair(null)
     setStepCount(0)
+    setStepMessage('Comparing [38] and [72]')
   }
 
-  // Active city tab for Event Mesh on-card preview
-  const [activeCity, setActiveCity] = useState('Bengaluru')
+  // Active city tab & event data for Event Mesh on-card preview
+  const [activeCity, setActiveCity] = useState<'Bengaluru' | 'Mumbai' | 'Delhi NCR' | 'Online'>('Bengaluru')
   const cityCounts: Record<string, number> = {
     Bengaluru: 184,
     Mumbai: 112,
     'Delhi NCR': 96,
     Online: 140,
+  }
+
+  const CITY_EVENTS: Record<string, { title: string; date: string; venue: string; tag: string }[]> = {
+    Bengaluru: [
+      { title: 'AI Systems & LLM Hackathon', date: 'This Sat · 10 AM', venue: 'Koramangala', tag: 'Hackathon' },
+      { title: 'Rust & Systems Architecture Meetup', date: 'Next Wed · 6 PM', venue: 'Indiranagar', tag: 'Meetup' },
+    ],
+    Mumbai: [
+      { title: 'FinTech High-Scale APIs Summit', date: 'This Sun · 11 AM', venue: 'BKC', tag: 'Summit' },
+      { title: 'Open Source Community Demo Day', date: 'Next Thu · 5 PM', venue: 'Powai', tag: 'Demo Day' },
+    ],
+    'Delhi NCR': [
+      { title: 'FastAPI & Microservices Workshop', date: 'This Sat · 2 PM', venue: 'Cyber Hub', tag: 'Workshop' },
+      { title: 'Cloud Native & Kubernetes Meetup', date: 'This Sun · 10 AM', venue: 'Noida Sec 62', tag: 'Meetup' },
+    ],
+    Online: [
+      { title: 'Async Architecture & Event Streams', date: 'Live Stream · Weekly', venue: 'Global Discord', tag: 'Live' },
+      { title: 'Zero-Downtime Database Migrations', date: 'Next Thu · 8 PM', venue: 'Webinar', tag: 'Workshop' },
+    ],
   }
 
   return (
@@ -93,7 +128,7 @@ export function PillarStack() {
                         <Terminal className="w-4 h-4" />
                       </div>
                       <h3 className="font-display font-bold text-xl text-[var(--text-primary)]">
-                        DI Notes
+                        DI Notes Visualizer
                       </h3>
                     </div>
                     <span className="font-mono text-[11px] px-2.5 py-0.5 rounded-full border border-[var(--border-base)] bg-[var(--bg-surface-elevated)] text-[var(--accent-primary)] font-semibold shadow-xs">
@@ -102,41 +137,71 @@ export function PillarStack() {
                   </div>
 
                   <p className="font-body text-sm text-[var(--text-secondary)] leading-relaxed mb-5">
-                    Distraction-free markdown studio for technical documentation, architecture notes, and instant sharing.
+                    Interactive algorithm runtime and memory visualizer. Step through comparisons, pointer swaps, and sorting mechanics in real time.
                   </p>
 
-                  {/* Interactive Mini Sandbox Widget */}
+                  {/* Interactive High-Contrast Sorting Visualizer */}
                   <div className="p-4 rounded-xl bg-[var(--bg-surface-inset)] border border-[var(--border-base)] mb-6">
-                    <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] mb-3">
-                      <span>Array Buffer · Step {stepCount}</span>
+                    <div className="flex items-center justify-between text-[11px] font-mono mb-3">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-violet-500 animate-pulse" />
+                        <span className="font-bold text-[var(--text-primary)]">Sorting Inspector</span>
+                        <span className="text-[var(--text-muted)]">· Step {stepCount}</span>
+                      </div>
                       <div className="flex items-center gap-1.5">
                         <button
                           onClick={handleStepSort}
-                          className="px-2 py-0.5 rounded bg-[var(--accent-primary)]/20 hover:bg-[var(--accent-primary)]/30 text-[var(--accent-primary)] flex items-center gap-1 transition-colors cursor-pointer"
+                          className="px-2 py-0.5 rounded bg-[var(--accent-primary)] text-white hover:opacity-90 flex items-center gap-1 font-bold transition-all cursor-pointer shadow-xs active:scale-95 text-[11px]"
                           title="Execute single sort step"
                         >
-                          <Play className="w-2.5 h-2.5" />
+                          <Play className="w-2.5 h-2.5 fill-current" />
                           <span>Step</span>
                         </button>
                         <button
                           onClick={handleResetSort}
-                          className="p-1 rounded hover:bg-white/10 text-[var(--text-muted)] transition-colors cursor-pointer"
+                          className="p-1 rounded bg-[var(--bg-surface-elevated)] border border-[var(--border-base)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
                           title="Reset array"
                         >
                           <RotateCcw className="w-2.5 h-2.5" />
                         </button>
                       </div>
                     </div>
-                    <div className="flex items-end gap-2 h-14 pt-2">
-                      {arrayState.map((val, idx) => (
-                        <div key={idx} className="flex-1 flex flex-col items-center gap-1">
-                          <div
-                            className="w-full rounded-t bg-gradient-to-t from-[var(--accent-primary)]/70 to-[var(--accent-primary)] transition-all duration-300 shadow-xs"
-                            style={{ height: `${(val / 100) * 44}px` }}
-                          />
-                          <span className="font-mono text-[10px] text-[var(--text-muted)]">{val}</span>
-                        </div>
-                      ))}
+
+                    {/* Bars Display Canvas */}
+                    <div className="flex items-end justify-between gap-2 h-24 px-2 pt-2 bg-[var(--bg-card)] rounded-lg border border-[var(--border-base)]">
+                      {arrayState.map((val, idx) => {
+                        const isComparing = comparingIdx[0] === idx || comparingIdx[1] === idx
+                        const isSwapped = swappedPair && (swappedPair[0] === idx || swappedPair[1] === idx)
+
+                        let barStyle = 'bg-violet-600 dark:bg-violet-500'
+                        if (isSwapped) {
+                          barStyle = 'bg-rose-500 shadow-[0_0_12px_rgba(244,63,94,0.6)]'
+                        } else if (isComparing) {
+                          barStyle = 'bg-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.6)]'
+                        }
+
+                        return (
+                          <div key={idx} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+                            <span className="font-mono text-[10px] font-bold text-[var(--text-muted)]">
+                              {val}
+                            </span>
+                            <div
+                              className={`w-full rounded-t transition-all duration-300 ${barStyle}`}
+                              style={{ height: `${Math.round((val / 100) * 52) + 12}px` }}
+                            />
+                          </div>
+                        )
+                      })}
+                    </div>
+
+                    {/* Step Status Message & Complexity */}
+                    <div className="mt-3 pt-2.5 border-t border-[var(--border-base)]/60 flex items-center justify-between text-[10.5px] font-mono">
+                      <span className="text-[var(--text-muted)] truncate max-w-[210px]">
+                        {stepMessage}
+                      </span>
+                      <span className="text-violet-600 dark:text-violet-400 font-bold shrink-0">
+                        O(n log n)
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -168,45 +233,71 @@ export function PillarStack() {
                       </h3>
                     </div>
                     <span className="font-mono text-[11px] px-2.5 py-0.5 rounded-full border border-[var(--border-base)] bg-[var(--bg-surface-elevated)] text-[var(--accent-secondary)] font-semibold shadow-xs">
-                      Live Tool
+                      Live Radar
                     </span>
                   </div>
 
                   <p className="font-body text-sm text-[var(--text-secondary)] leading-relaxed mb-5">
-                    Lightweight pub/sub event broker for modern applications with sub-millisecond dispatch and zero setup complexity.
+                    Curated tech meetups, hackathons, and developer conferences across major tech hubs with live event tracking.
                   </p>
 
-                  {/* Interactive City Filter Preview */}
+                  {/* Interactive Tech Events Feed Preview */}
                   <div className="p-4 rounded-xl bg-[var(--bg-surface-inset)] border border-[var(--border-base)] mb-6">
-                    <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] mb-3">
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3 h-3 text-[var(--accent-secondary)]" />
-                        <span>Active Hub: {activeCity}</span>
+                    <div className="flex items-center justify-between text-[11px] font-mono mb-2.5">
+                      <span className="flex items-center gap-1.5 font-bold text-[var(--text-primary)]">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                        <span>{activeCity} Hub</span>
                       </span>
-                      <span className="font-semibold text-[var(--accent-secondary)]">
-                        {cityCounts[activeCity]} Events
+                      <span className="font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20 text-[10px]">
+                        {cityCounts[activeCity]} Curated Events
                       </span>
                     </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
-                      {Object.keys(cityCounts).map((city) => (
+
+                    {/* City Selector Buttons */}
+                    <div className="grid grid-cols-4 gap-1 mb-3">
+                      {(['Bengaluru', 'Mumbai', 'Delhi NCR', 'Online'] as const).map((city) => (
                         <button
                           key={city}
                           onClick={() => setActiveCity(city)}
-                          className={`px-2.5 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer truncate text-center ${
+                          className={`py-1 px-1 rounded-md text-[10.5px] font-mono transition-all cursor-pointer truncate text-center ${
                             activeCity === city
-                              ? 'bg-[var(--accent-secondary)] text-white font-semibold shadow-sm'
+                              ? 'bg-indigo-600 text-white font-bold shadow-xs'
                               : 'bg-[var(--bg-surface-elevated)] text-[var(--text-muted)] hover:text-[var(--text-primary)] border border-[var(--border-base)]'
                           }`}
                         >
-                          {city}
+                          {city === 'Delhi NCR' ? 'Delhi' : city}
                         </button>
+                      ))}
+                    </div>
+
+                    {/* Live Event Cards Feed */}
+                    <div className="space-y-1.5">
+                      {CITY_EVENTS[activeCity].map((evt, i) => (
+                        <div
+                          key={i}
+                          className="p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-base)] flex items-center justify-between gap-2 text-xs"
+                        >
+                          <div className="min-w-0 flex-1">
+                            <div className="font-display font-semibold text-[var(--text-primary)] text-[11.5px] truncate">
+                              {evt.title}
+                            </div>
+                            <div className="font-mono text-[10px] text-[var(--text-muted)] flex items-center gap-1.5 mt-0.5">
+                              <span>{evt.date}</span>
+                              <span>·</span>
+                              <span>{evt.venue}</span>
+                            </div>
+                          </div>
+                          <span className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-[var(--bg-surface-elevated)] border border-[var(--border-base)] text-[var(--text-secondary)] font-medium shrink-0">
+                            {evt.tag}
+                          </span>
+                        </div>
                       ))}
                     </div>
                   </div>
                 </div>
 
                 <div className="pt-4 border-t border-[var(--border-base)] flex items-center justify-between">
-                  <span className="font-mono text-xs text-[var(--text-muted)]">Live Broker</span>
+                  <span className="font-mono text-xs text-[var(--text-muted)]">Live Hubs</span>
                   <Link
                     to="/products"
                     className="btn-ghost py-1.5 px-3.5 text-xs font-body font-semibold inline-flex items-center gap-1.5 shadow-xs"

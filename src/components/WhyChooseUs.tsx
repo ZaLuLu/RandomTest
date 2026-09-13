@@ -101,14 +101,10 @@ export function WhyChooseUs() {
         </ScrollReveal>
 
 
-        {/* Linear Stepper Navigation Bar (3D Tactile Switches) */}
+        {/* Linear Stepper Navigation Bar (Tactile Segmented Switchboard) */}
         <ScrollReveal delay={0.12}>
-          <div className="relative p-2.5 sm:p-3 rounded-2xl bg-gradient-to-r from-violet-500/[0.08] via-indigo-500/[0.05] to-fuchsia-500/[0.08] dark:from-violet-950/40 dark:via-indigo-950/30 dark:to-purple-950/40 backdrop-blur-xl border border-violet-500/25 dark:border-violet-500/35 shadow-[0_8px_30px_rgba(124,58,237,0.12),inset_0_1px_0_rgba(255,255,255,0.4)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] mb-8 overflow-hidden">
-            {/* Ambient Glow Accents */}
-            <div className="absolute -top-10 -left-10 w-36 h-36 bg-violet-500/20 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-10 -right-10 w-36 h-36 bg-fuchsia-500/15 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="relative z-10 grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-2.5">
+          <div className="relative p-1.5 sm:p-2 rounded-2xl bg-[var(--bg-surface-inset)] border border-[var(--border-base)] shadow-xs mb-8 overflow-hidden">
+            <div className="relative z-10 grid grid-cols-2 sm:grid-cols-5 gap-1.5 sm:gap-2">
               {STEPS.map((step, idx) => {
                 const isActive = activeStepIndex === idx
                 return (
@@ -117,27 +113,27 @@ export function WhyChooseUs() {
                     onClick={() => {
                       setActiveStepIndex(idx)
                     }}
-                    className={`py-3 px-3 sm:py-3.5 sm:px-3.5 rounded-xl font-mono text-xs transition-all duration-200 flex flex-col items-start gap-1 cursor-pointer text-left ${isActive
-                        ? 'bg-[var(--bg-surface-elevated)] border-2 border-[var(--accent-primary)] text-[var(--text-primary)] shadow-[0_4px_20px_rgba(124,58,237,0.3),inset_0_1px_0_rgba(255,255,255,0.4)] translate-y-[-2px]'
-                        : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-white/40 dark:hover:bg-white/5 border border-transparent hover:border-violet-500/20 hover:-translate-y-0.5'
+                    className={`py-2.5 px-3 sm:py-3 sm:px-3.5 rounded-xl font-mono text-xs transition-all duration-200 flex flex-col items-start gap-1 cursor-pointer text-left ${isActive
+                        ? 'bg-[var(--bg-card)] border border-[var(--border-base)] text-[var(--text-primary)] shadow-sm'
+                        : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-elevated)]/60 border border-transparent'
                       }`}
                   >
                     <div className="flex items-center justify-between w-full">
-                      <span className={`px-1.5 py-0.5 rounded text-[11px] font-bold ${isActive
+                      <span className={`px-1.5 py-0.5 rounded text-[11px] font-bold transition-colors ${isActive
                           ? 'bg-[var(--accent-primary)] text-white shadow-xs'
                           : 'bg-black/5 dark:bg-white/5 text-[var(--text-muted)]'
                         }`}>
                         {step.num}
                       </span>
                       <span className="text-[10px] uppercase font-semibold tracking-wider text-[var(--text-muted)]">
-                        {step.timeline.split(' ')[0]}
+                        {step.timeline}
                       </span>
                     </div>
-                    <div className="flex items-center gap-1.5 w-full mt-0.5">
+                    <div className="flex items-center gap-1.5 w-full mt-1">
                       {isActive && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] shadow-[0_0_8px_var(--accent-primary)] animate-pulse shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] shrink-0" />
                       )}
-                      <span className="font-display font-bold text-xs truncate">
+                      <span className={`font-display text-xs truncate ${isActive ? 'font-bold text-[var(--text-primary)]' : 'font-medium text-[var(--text-secondary)]'}`}>
                         {step.title.split(' ')[0]}
                       </span>
                     </div>

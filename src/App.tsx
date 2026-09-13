@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef, useState, lazy, Suspense } from 'react'
+import React, { useEffect, useLayoutEffect, useCallback, useRef, useState, lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Lenis from 'lenis'
 import gsap from 'gsap'
@@ -26,6 +26,7 @@ import { TargetCursor } from './components/ui/react-bits'
 import { useDeviceProfile } from './utils/useDeviceProfile'
 import { ambientAudio } from './utils/audioEngine'
 
+// Page Level Views
 import ProductsPage from './pages/ProductsPage'
 import ServicesPage from './pages/ServicesPage'
 import AcademicsPage from './pages/AcademicsPage'
@@ -36,8 +37,8 @@ gsap.registerPlugin(ScrollTrigger)
 // Route title & scroll restoration
 function ScrollToTop() {
   const { pathname } = useLocation()
-  useEffect(() => {
-    window.scrollTo(0, 0)
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
     ScrollTrigger.refresh()
 
     const titles: Record<string, string> = {

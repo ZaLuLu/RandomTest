@@ -10,8 +10,8 @@ import { ambientAudio } from '../utils/audioEngine'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Module-scoped session flag: remains true across client-side React Router navigation, resets only on full page reload
-let hasBouncedInSession = false
+// Module-scoped session flag: remains true across client-side React Router navigation and reloads within the tab
+let hasBouncedInSession = typeof window !== 'undefined' && sessionStorage.getItem('nayak_bounced') === '1'
 
 interface Hero3DProps {
   visible?: boolean
@@ -48,7 +48,11 @@ export function Hero3D({
   const revealedContentRef = useRef<HTMLDivElement>(null)
   const cardsContainerRef = useRef<HTMLDivElement>(null)
   const cardRefs = useRef<(HTMLAnchorElement | null)[]>([])
-  const hasRevealedRef = useRef(hasBouncedInSession || hasIncomingScroll)
+  const hasRevealedRef = useRef(
+    hasBouncedInSession ||
+    hasIncomingScroll ||
+    (typeof window !== 'undefined' && sessionStorage.getItem('nayak_bounced') === '1')
+  )
 
   const [accentIndex, setAccentIndex] = useState(0)
   const [mobileActiveCard, setMobileActiveCard] = useState(0)
@@ -171,10 +175,12 @@ export function Hero3D({
 
         if (isReduced) {
           gsap.set(letters, { opacity: 1, scale: 1, y: 0, filter: 'none' })
-          gsap.set([periodEl, kicker, subline, crowdEl], { opacity: 1, scale: 1 })
-          if (wordmarkStage) gsap.set(wordmarkStage, { opacity: 0, pointerEvents: 'none' })
-          if (revealedContent) gsap.set(revealedContent, { opacity: 1, y: 0, scale: 1, pointerEvents: 'auto' })
+          gsap.set([periodEl, kicker, subline, crowdEl], { opacity: 1, scale: 1, y: 0 })
+          if (wordmarkStage) gsap.set(wordmarkStage, { opacity: 1, pointerEvents: 'auto' })
+          if (wordmark) gsap.set(wordmark, { opacity: 1, scale: 1, y: 0 })
+          if (revealedContent) gsap.set(revealedContent, { opacity: 0, pointerEvents: 'none' })
           if (flyingBall) gsap.set(flyingBall, { opacity: 0 })
+          onWordmarkDocked?.()
           return
         }
 
@@ -183,11 +189,12 @@ export function Hero3D({
           hasRevealedRef.current = true
           gsap.set(letters, { opacity: 1, scale: 1, y: 0, filter: 'none' })
           gsap.set([periodEl, kicker, subline, scrollPrompt, crowdEl], { opacity: 1, scale: 1, y: 0 })
-          if (wordmarkStage) gsap.set(wordmarkStage, { opacity: 0, pointerEvents: 'none' })
-          if (revealedContent) gsap.set(revealedContent, { opacity: 1, y: 0, scale: 1, pointerEvents: 'auto' })
+          if (wordmarkStage) gsap.set(wordmarkStage, { opacity: 1, pointerEvents: 'auto' })
+          if (wordmark) gsap.set(wordmark, { opacity: 1, scale: 1, y: 0 })
+          if (revealedContent) gsap.set(revealedContent, { opacity: 0, scale: 0.94, y: 36, pointerEvents: 'none' })
           if (flyingBall) gsap.set(flyingBall, { opacity: 0 })
           onWordmarkDocked?.()
-          return
+          // Do NOT return early: masterTl below will create the scroll-pinned scrub interaction so scrolling up restores Hero
         }
 
         // ── RETURNING TO HOMEPAGE IN EXISTING SESSION ──
@@ -257,6 +264,9 @@ export function Hero3D({
               onComplete: () => {
                 hasRevealedRef.current = true
                 hasBouncedInSession = true
+                try {
+                  sessionStorage.setItem('nayak_bounced', '1')
+                } catch {}
               },
             })
 
@@ -557,6 +567,16 @@ export function Hero3D({
             pin: true,
             anticipatePin: 1,
             invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              if (self.progress <= 0.05) {
+                if (wordmarkStage) gsap.set(wordmarkStage, { opacity: 1, pointerEvents: 'auto' })
+                if (wordmark) gsap.set(wordmark, { opacity: 1, scale: 1, y: 0 })
+                if (revealedContent) {
+                  revealedContent.style.opacity = '0'
+                  revealedContent.style.pointerEvents = 'none'
+                }
+              }
+            },
           },
         })
 

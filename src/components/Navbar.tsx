@@ -138,6 +138,7 @@ export function Navbar({ onScrollTo, onReplayIntro }: NavbarProps) {
         if (onScrollTo) onScrollTo('home')
         else window.scrollTo({ top: 0, behavior: 'smooth' })
       } else {
+        window.scrollTo({ top: 0, behavior: 'instant' })
         navigate('/')
       }
       return
@@ -172,6 +173,7 @@ export function Navbar({ onScrollTo, onReplayIntro }: NavbarProps) {
       if (onScrollTo) onScrollTo('home')
       else window.scrollTo({ top: 0, behavior: 'smooth' })
     } else {
+      window.scrollTo({ top: 0, behavior: 'instant' })
       navigate('/')
     }
   }

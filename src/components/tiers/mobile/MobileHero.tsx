@@ -2,12 +2,16 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Terminal, Globe, GraduationCap, Code2, Cpu, Zap, Layers } from 'lucide-react'
 import { SCOPE_BADGES } from '../../../data/divisions'
+import { useDeviceProfile } from '../../../utils/useDeviceProfile'
 
 interface MobileHeroProps {
   onScrollToDivision?: (id: string) => void
 }
 
 export function MobileHero({ onScrollToDivision }: MobileHeroProps) {
+  const device = useDeviceProfile()
+  const isLandscape = device.isLandscapeCompact
+
   const getScopeIcon = (name: string) => {
     switch (name) {
       case 'Code2':
@@ -27,34 +31,55 @@ export function MobileHero({ onScrollToDivision }: MobileHeroProps) {
   return (
     <section
       id="hero"
-      className="relative w-full flex flex-col justify-start px-4 pt-16 pb-8 overflow-x-hidden select-none"
+      className={`relative w-full overflow-x-hidden select-none transition-all duration-300 ${
+        isLandscape
+          ? 'px-6 pt-12 pb-6 min-h-[auto]'
+          : 'flex flex-col justify-start px-4 pt-16 pb-8 min-h-[auto]'
+      }`}
     >
-      {/* ── STUDIO BRANDING & KICKER BADGE (CENTERED & PROMINENT) ── */}
-      <div className="w-full flex flex-col items-center text-center mx-auto mb-7">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[var(--border-base)] bg-[var(--bg-surface)] backdrop-blur-md mb-3.5 shadow-xs">
-          <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--text-secondary)] font-semibold">
-            Nayak Labs · Software Studio
+      <div className={isLandscape ? 'grid grid-cols-12 gap-6 items-center max-w-5xl mx-auto w-full' : 'w-full'}>
+        {/* ── STUDIO BRANDING & KICKER BADGE ── */}
+        <div
+          className={
+            isLandscape
+              ? 'col-span-5 flex flex-col items-start text-left'
+              : 'w-full flex flex-col items-center text-center mx-auto mb-7'
+          }
+        >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[var(--border-base)] bg-[var(--bg-surface)] backdrop-blur-md mb-2.5 shadow-xs">
+            <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--text-secondary)] font-semibold">
+              Nayak Labs · Software Studio
+            </span>
+          </div>
+
+          {/* ── MONUMENTAL WORDMARK ── */}
+          <h1
+            className={`font-display font-black leading-[0.96] tracking-tight text-[var(--text-primary)] mb-2.5 ${
+              isLandscape
+                ? 'text-[clamp(2.2rem,5vw,3.2rem)] text-left'
+                : 'text-[clamp(3.1rem,12.5vw,4.5rem)] text-center'
+            }`}
+          >
+            Nayak Labs<span className="text-[var(--accent-primary)] drop-shadow-[0_0_12px_var(--accent-primary)]">.</span>
+          </h1>
+
+          {/* ── EDITORIAL SUBTITLE ── */}
+          <p
+            className={`font-body text-[13px] sm:text-[13.5px] text-[var(--text-secondary)] leading-relaxed mb-2 ${
+              isLandscape ? 'text-left max-w-sm' : 'text-center max-w-[340px] mx-auto'
+            }`}
+          >
+            We build software tools, web applications, and hands-on technical training.
+          </p>
+
+          {/* ── STATUS BADGE ── */}
+          <span className="font-mono text-[9.5px] text-emerald-500 dark:text-emerald-400 font-bold inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 mt-0.5">
+            Shipping Weekly
           </span>
         </div>
 
-        {/* ── MONUMENTAL WORDMARK ── */}
-        <h1 className="font-display font-black text-[clamp(3.1rem,12.5vw,4.5rem)] leading-[0.96] tracking-tight text-[var(--text-primary)] mb-3 text-center">
-          Nayak Labs<span className="text-[var(--accent-primary)] drop-shadow-[0_0_12px_var(--accent-primary)]">.</span>
-        </h1>
-
-        {/* ── EDITORIAL SUBTITLE ── */}
-        <p className="font-body text-[13.5px] text-[var(--text-secondary)] leading-relaxed max-w-[340px] text-center mx-auto mb-2">
-          We build software tools, web applications, and hands-on technical training.
-        </p>
-
-        {/* ── STATUS BADGE ── */}
-        <span className="font-mono text-[9.5px] text-emerald-500 dark:text-emerald-400 font-bold inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 mt-1">
-          Shipping Weekly
-        </span>
-      </div>
-
-      {/* ── 3 DIVISION CARDS WITH 3D GLOSSY BUTTONS ── */}
-      <div className="w-full flex flex-col gap-3.5 mb-7">
+        {/* ── 3 DIVISION CARDS CONTAINER ── */}
+        <div className={isLandscape ? 'col-span-7 flex flex-col gap-2.5 w-full' : 'w-full flex flex-col gap-3.5 mb-7'}>
         <div className="flex items-center justify-between px-1 mb-0.5">
           <span className="font-mono text-[10.5px] uppercase tracking-wider text-[var(--accent-primary)] font-bold">
             What We Do
@@ -166,6 +191,7 @@ export function MobileHero({ onScrollToDivision }: MobileHeroProps) {
             </div>
           </div>
         </Link>
+        </div>
       </div>
 
       {/* ── 4 COMPACT SCOPE BADGES (2x2 GRID) ── */}

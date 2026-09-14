@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useCallback, useRef, useState, lazy, Suspense } from 'react'
+import React, { useEffect, useLayoutEffect, useCallback, useRef, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Lenis from 'lenis'
 import gsap from 'gsap'
@@ -285,16 +285,14 @@ function MainLayout() {
           {/* Act 4: Milestones & Delivery Blueprint */}
           <TierWhyChooseUsDispatcher />
 
-          {/* Act 5: Community & Dispatch (Desktop/Tablet Only) */}
-          {!device.isMobile && <SocialMediaSection />}
+          {/* Act 5: Community & Dispatch (All Devices) */}
+          <SocialMediaSection />
 
-          {/* Ribbon Marquee #2 (Desktop/Tablet Only) */}
-          {!device.isMobile && (
-            <TierMarqueeDispatcher
-              text="PRODUCTION CODEBASES • REST & WEBSOCKET APIS • POSTGRESQL & REDIS • ZERO CLOUD LOCK-IN • DIRECT ACCESS • "
-              direction="right"
-            />
-          )}
+          {/* Ribbon Marquee #2 (All Devices) */}
+          <TierMarqueeDispatcher
+            text="PRODUCTION CODEBASES • REST & WEBSOCKET APIS • POSTGRESQL & REDIS • ZERO CLOUD LOCK-IN • DIRECT ACCESS • "
+            direction="right"
+          />
 
           {/* Act 6: Direct Founders Contact */}
           <TierContactDispatcher />

@@ -1,21 +1,13 @@
 import React from 'react'
 import { useDeviceProfile } from '../../utils/useDeviceProfile'
 
-// Mobile-Dedicated Components (100% Isolated in src/components/tiers/mobile/)
+// Mobile-Dedicated Components (Isolated in src/components/tiers/mobile/)
 import { MobileNavbar } from './mobile/MobileNavbar'
 import { MobileHero } from './mobile/MobileHero'
-import { MobileMarquee } from './mobile/MobileMarquee'
-import { MobileManifesto } from './mobile/MobileManifesto'
-import { MobileContact } from './mobile/MobileContact'
 
 // Tablet-Dedicated Components
 import { TabletNavbar } from './tablet/TabletNavbar'
 import { TabletHero } from './tablet/TabletHero'
-import { TabletPillarStack } from './tablet/TabletPillarStack'
-import { TabletMarquee } from './tablet/TabletMarquee'
-import { TabletManifesto } from './tablet/TabletManifesto'
-import { TabletWhyChooseUs } from './tablet/TabletWhyChooseUs'
-import { TabletContact } from './tablet/TabletContact'
 
 // Desktop & Laptop Components (UNTOUCHED)
 import { Navbar } from '../Navbar'
@@ -82,17 +74,6 @@ export function TierHeroDispatcher({
 
 // ── 3. PILLAR STACK (DIVISIONS) DISPATCHER ──
 export function TierPillarStackDispatcher() {
-  const device = useDeviceProfile()
-
-  // On mobile, the 3 stacked purple cards in MobileHero already handle direct page navigation cleanly!
-  if (device.isMobile) {
-    return null
-  }
-
-  if (device.isTablet || (device.isTouch && device.width < 1024)) {
-    return <TabletPillarStack />
-  }
-
   return <PillarStack />
 }
 
@@ -103,16 +84,6 @@ interface TierMarqueeProps {
 }
 
 export function TierMarqueeDispatcher({ text, direction = 'left' }: TierMarqueeProps) {
-  const device = useDeviceProfile()
-
-  if (device.isMobile) {
-    return <MobileMarquee text={text} />
-  }
-
-  if (device.isTablet || (device.isTouch && device.width < 1024)) {
-    return <TabletMarquee text={text} direction={direction} />
-  }
-
   return (
     <CurvedLoop
       text={text}
@@ -127,46 +98,15 @@ export function TierMarqueeDispatcher({ text, direction = 'left' }: TierMarqueeP
 
 // ── 5. ABOUT / MANIFESTO DISPATCHER ──
 export function TierAboutDispatcher() {
-  const device = useDeviceProfile()
-
-  if (device.isMobile) {
-    return <MobileManifesto />
-  }
-
-  if (device.isTablet || (device.isTouch && device.width < 1024)) {
-    return <TabletManifesto />
-  }
-
   return <About />
 }
 
 // ── 6. WHY CHOOSE US (WORKFLOW) DISPATCHER ──
 export function TierWhyChooseUsDispatcher() {
-  const device = useDeviceProfile()
-
-  // On mobile, keep it streamlined and focused
-  if (device.isMobile) {
-    return null
-  }
-
-  if (device.isTablet || (device.isTouch && device.width < 1024)) {
-    return <TabletWhyChooseUs />
-  }
-
   return <WhyChooseUs />
 }
 
 // ── 7. CONTACT DISPATCHER ──
 export function TierContactDispatcher() {
-  const device = useDeviceProfile()
-
-  if (device.isMobile) {
-    return <MobileContact />
-  }
-
-  if (device.isTablet || (device.isTouch && device.width < 1024)) {
-    return <TabletContact />
-  }
-
   return <Contact />
 }

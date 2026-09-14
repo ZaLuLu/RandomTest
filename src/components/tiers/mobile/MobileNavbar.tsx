@@ -13,7 +13,8 @@ const MOBILE_NAV_LINKS = [
   { label: 'Services', num: '02', id: 'services', pagePath: '/services' },
   { label: 'Academics', num: '03', id: 'academics', pagePath: '/academics' },
   { label: 'Workflow', num: '04', id: 'why-us', pagePath: '/#why-us' },
-  { label: 'Direct Contact', num: '05', id: 'contact', pagePath: '/#contact' },
+  { label: 'Dispatches', num: '05', id: 'social', pagePath: '/#social' },
+  { label: 'Direct Contact', num: '06', id: 'contact', pagePath: '/#contact' },
 ]
 
 export function MobileNavbar({ onScrollTo }: MobileNavbarProps) {
@@ -58,7 +59,8 @@ export function MobileNavbar({ onScrollTo }: MobileNavbarProps) {
   const handleBrandClick = () => {
     setMenuOpen(false)
     if (isHome) {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      if (onScrollTo) onScrollTo('home')
+      else window.scrollTo({ top: 0, behavior: 'smooth' })
     } else {
       navigate('/')
     }
@@ -69,7 +71,7 @@ export function MobileNavbar({ onScrollTo }: MobileNavbarProps) {
       {/* ── ULTRA-SLIM DYNAMIC CAPSULE NAVBAR ── */}
       <header className="fixed top-2.5 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
         <nav
-          className="pointer-events-auto w-full max-w-[360px] h-9 px-3 rounded-full bg-[var(--bg-surface-elevated)]/90 backdrop-blur-xl border border-[var(--border-base)] shadow-[0_4px_20px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.1)] flex items-center justify-between transition-all duration-300"
+          className="pointer-events-auto w-full max-w-[360px] sm:max-w-[480px] h-9 px-3 rounded-full bg-[var(--bg-surface-elevated)]/90 backdrop-blur-xl border border-[var(--border-base)] shadow-[0_4px_20px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.1)] flex items-center justify-between transition-all duration-300"
           aria-label="Mobile navigation"
         >
           {/* Brand Logo with Glowing Jewel Dot */}

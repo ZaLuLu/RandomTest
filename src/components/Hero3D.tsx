@@ -434,7 +434,7 @@ export function Hero3D({
             const impact1Time = bigJumpStart + bigJumpDuration
             entranceTl.call(
               () => {
-                ambientAudio.playBounceSound(8, 10, false)
+                ambientAudio.playBounceSound(9, 10, false)
               },
               undefined,
               impact1Time
@@ -470,7 +470,7 @@ export function Hero3D({
             const impact2Time = bounce1Start + bounce1Duration
             entranceTl.call(
               () => {
-                ambientAudio.playBounceSound(9, 10, false)
+                ambientAudio.playBounceSound(10, 10, false)
               },
               undefined,
               impact2Time
@@ -517,7 +517,7 @@ export function Hero3D({
 
             entranceTl.call(
               () => {
-                ambientAudio.playBounceSound(10, 10, true)
+                ambientAudio.playBounceSound(11, 10, true)
                 gsap.fromTo(
                   periodEl,
                   { opacity: 0, scale: 0.6 },

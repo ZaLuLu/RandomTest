@@ -207,7 +207,7 @@ class AmbientAudioEngine {
 
       osc.connect(filter)
       filter.connect(gain)
-      gain.connect(this.ctx.destination)
+       gain.connect(this.ctx.destination)
 
       osc.start(now)
       osc.stop(now + 0.04)
@@ -218,11 +218,43 @@ class AmbientAudioEngine {
     this.playScrollTick(1.2)
   }
 
-  // 3. WATER-FILLED GLASS JUG & METALLIC SPOON SYNTHESIZER
-  // Accurately models the physical acoustics of a metal spoon striking a water-filled glass jug:
-  // - High-frequency metallic spoon strike transient (sharp ping: 3800Hz -> 1600Hz in 12ms)
+  // ── 3. TACTILE SIDE GUARD RAIL SECTION TICK ──
+  // Simulates a precision milled notched index click when transitioning sections
+  public playRailSectionTick(isArrival = false) {
+    if (this.soundSuppressed) return
+    try {
+      this.unlock()
+      if (!this.ctx || this.ctx.state === 'suspended') return
+
+      const now = this.ctx.currentTime
+      const baseFreq = isArrival ? 1200 : 1600
+
+      // 1. Tactile notch impulse
+      const osc = this.ctx.createOscillator()
+      const gain = this.ctx.createGain()
+      osc.type = isArrival ? 'sine' : 'triangle'
+      osc.frequency.setValueAtTime(baseFreq, now)
+      osc.frequency.exponentialRampToValueAtTime(isArrival ? 440 : 320, now + 0.02)
+
+      const peakGain = isArrival ? 0.16 : 0.12
+      const duration = isArrival ? 0.06 : 0.035
+      gain.gain.setValueAtTime(0.001, now)
+      gain.gain.linearRampToValueAtTime(peakGain, now + 0.001)
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration)
+
+      osc.connect(gain)
+      gain.connect(this.ctx.destination)
+
+      osc.start(now)
+      osc.stop(now + duration + 0.01)
+    } catch (_) {}
+  }
+
+  // ── 4. WATER-FILLED GLASS JUG & METALLIC SPOON SYNTHESIZER ──
+  // Models the physical acoustics of a metal spoon striking crystal glassware:
+  // - High-frequency metallic spoon strike transient (sharp ping)
   // - Dual inharmonic glass ring modes (fundamental + 2.32x lip overtone)
-  // - Water-damped liquid resonance with high-Q crystal bandpass filter
+  // - True ascending 9-letter crystalline scale for "NayakLabs" + 528Hz Solfeggio bell for "."
   public playBounceSound(stepIndex = 0, totalSteps = 9, isPeriod = false) {
     if (this.soundSuppressed) return
     try {
@@ -262,7 +294,7 @@ class AmbientAudioEngine {
         const glassOsc = this.ctx.createOscillator()
         const glassGain = this.ctx.createGain()
         glassOsc.type = 'sine'
-        glassOsc.frequency.setValueAtTime(fundamental + 12, now) // initial liquid impact drift
+        glassOsc.frequency.setValueAtTime(fundamental + 12, now)
         glassOsc.frequency.exponentialRampToValueAtTime(fundamental, now + 0.04)
 
         // 3. Inharmonic glass overtone mode (2.32x lip resonance)
@@ -283,7 +315,7 @@ class AmbientAudioEngine {
 
         overtoneGain.gain.setValueAtTime(0.001, now)
         overtoneGain.gain.linearRampToValueAtTime(0.18, now + 0.002)
-        overtoneGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22) // Water quickly absorbs overtone
+        overtoneGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22)
 
         glassOsc.connect(glassFilter)
         overtoneOsc.connect(glassFilter)
@@ -295,20 +327,32 @@ class AmbientAudioEngine {
         glassOsc.stop(now + 0.7)
         overtoneOsc.stop(now + 0.25)
       } else {
-        // ── PENTATONIC GLASS WATER JUG CHIMES (STEPS 0..9) ──
-        // Simulates striking crystal water glasses with varying water levels (ascending pentatonic notes)
-        const GLASS_SCALE = [740, 830, 988, 1108, 1244, 988, 1108, 1244, 1480, 1660]
+        // ── 9-TONE ASCENDING CRYSTAL GLASS LADDER FOR "N-a-y-a-k-L-a-b-s" ──
+        // Clean harmonic musical progression (G5 -> A6) with dedicated pitches for period micro-rebounds
+        const GLASS_SCALE = [
+          784,  // 0: 'N' (G5)
+          880,  // 1: 'a' (A5)
+          988,  // 2: 'y' (B5)
+          1046, // 3: 'a' (C6)
+          1175, // 4: 'k' (D6)
+          1318, // 5: 'L' (E6 - Word gap jump)
+          1397, // 6: 'a' (F6)
+          1568, // 7: 'b' (G6)
+          1760, // 8: 's' (A6)
+          1976, // 9: Primary period landing (B6)
+          2093, // 10: Micro-bounce 1 (C7)
+        ]
         const fundamental = GLASS_SCALE[stepIndex % GLASS_SCALE.length] || 880
 
         // 1. Sharp spoon clink transient (metallic tap)
         const spoonOsc = this.ctx.createOscillator()
         const spoonGain = this.ctx.createGain()
         spoonOsc.type = 'triangle'
-        spoonOsc.frequency.setValueAtTime(fundamental * 3.4, now)
-        spoonOsc.frequency.exponentialRampToValueAtTime(fundamental * 1.6, now + 0.012)
+        spoonOsc.frequency.setValueAtTime(fundamental * 3.2, now)
+        spoonOsc.frequency.exponentialRampToValueAtTime(fundamental * 1.5, now + 0.012)
 
         spoonGain.gain.setValueAtTime(0.001, now)
-        spoonGain.gain.linearRampToValueAtTime(0.28, now + 0.001)
+        spoonGain.gain.linearRampToValueAtTime(0.32, now + 0.001)
         spoonGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.015)
 
         spoonOsc.connect(spoonGain)
@@ -334,10 +378,10 @@ class AmbientAudioEngine {
         glassFilter.frequency.setValueAtTime(fundamental, now)
         glassFilter.Q.setValueAtTime(8.5, now)
 
-        // Envelope: Crisp instant tap followed by a singing crystal decay (0.28s - 0.36s)
-        const decayDuration = 0.28 + (stepIndex / 10) * 0.08
+        // Envelope: Crisp instant tap followed by singing crystal decay (0.24s - 0.32s)
+        const decayDuration = 0.24 + (stepIndex / 10) * 0.06
         glassGain.gain.setValueAtTime(0.001, now)
-        glassGain.gain.linearRampToValueAtTime(0.38, now + 0.001)
+        glassGain.gain.linearRampToValueAtTime(0.42, now + 0.001)
         glassGain.gain.exponentialRampToValueAtTime(0.0001, now + decayDuration)
 
         overtoneGain.gain.setValueAtTime(0.001, now)
@@ -354,6 +398,133 @@ class AmbientAudioEngine {
         glassOsc.stop(now + decayDuration + 0.02)
         overtoneOsc.stop(now + 0.14)
       }
+    } catch (_) {}
+  }
+
+  // ── 5. INTERACTIVE PRODUCT SORTING SYNTHESIZER ──
+  // Real-time audio feedback for sorting algorithm visualizers:
+  // - playSortStep: Melodic sine ping whose pitch corresponds to the array element value
+  // - playSortSwap: Dual tactile impact marking memory exchanges
+  // - playSortComplete: 3-note ascending crystalline chord shimmer
+  // - playSortReset: Subtle double chirp
+  public playSortStep(value: number, maxValue = 100) {
+    if (this.soundSuppressed) return
+    try {
+      this.unlock()
+      if (!this.ctx || this.ctx.state === 'suspended') return
+
+      const now = this.ctx.currentTime
+      const clampedVal = Math.max(1, Math.min(value, maxValue))
+      const freq = 280 + (clampedVal / maxValue) * 920 // 280Hz - 1200Hz
+
+      const osc = this.ctx.createOscillator()
+      const gain = this.ctx.createGain()
+      osc.type = 'sine'
+      osc.frequency.setValueAtTime(freq, now)
+
+      gain.gain.setValueAtTime(0.001, now)
+      gain.gain.linearRampToValueAtTime(0.18, now + 0.002)
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.035)
+
+      osc.connect(gain)
+      gain.connect(this.ctx.destination)
+
+      osc.start(now)
+      osc.stop(now + 0.04)
+    } catch (_) {}
+  }
+
+  public playSortSwap(val1 = 50, val2 = 50, maxValue = 100) {
+    if (this.soundSuppressed) return
+    try {
+      this.unlock()
+      if (!this.ctx || this.ctx.state === 'suspended') return
+
+      const now = this.ctx.currentTime
+      const f1 = 380 + (Math.max(1, Math.min(val1, maxValue)) / maxValue) * 600
+      const f2 = 380 + (Math.max(1, Math.min(val2, maxValue)) / maxValue) * 600
+
+      // Dual rapid impulses spaced by 12ms
+      ;[
+        { freq: f1, offset: 0 },
+        { freq: f2, offset: 0.014 },
+      ].forEach(({ freq, offset }) => {
+        if (!this.ctx) return
+        const osc = this.ctx.createOscillator()
+        const gain = this.ctx.createGain()
+        osc.type = 'triangle'
+        osc.frequency.setValueAtTime(freq * 1.4, now + offset)
+        osc.frequency.exponentialRampToValueAtTime(freq, now + offset + 0.02)
+
+        gain.gain.setValueAtTime(0.001, now + offset)
+        gain.gain.linearRampToValueAtTime(0.22, now + offset + 0.001)
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.025)
+
+        osc.connect(gain)
+        gain.connect(this.ctx.destination)
+        osc.start(now + offset)
+        osc.stop(now + offset + 0.03)
+      })
+    } catch (_) {}
+  }
+
+  public playSortComplete() {
+    if (this.soundSuppressed) return
+    try {
+      this.unlock()
+      if (!this.ctx || this.ctx.state === 'suspended') return
+
+      const now = this.ctx.currentTime
+      // Ascending celebratory triad: [880, 1175, 1760] Hz
+      const chord = [880, 1175, 1760]
+      chord.forEach((freq, idx) => {
+        if (!this.ctx) return
+        const osc = this.ctx.createOscillator()
+        const gain = this.ctx.createGain()
+        const offset = idx * 0.045
+
+        osc.type = 'sine'
+        osc.frequency.setValueAtTime(freq, now + offset)
+
+        gain.gain.setValueAtTime(0.001, now + offset)
+        gain.gain.linearRampToValueAtTime(0.24, now + offset + 0.002)
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.28)
+
+        osc.connect(gain)
+        gain.connect(this.ctx.destination)
+
+        osc.start(now + offset)
+        osc.stop(now + offset + 0.3)
+      })
+    } catch (_) {}
+  }
+
+  public playSortReset() {
+    if (this.soundSuppressed) return
+    try {
+      this.unlock()
+      if (!this.ctx || this.ctx.state === 'suspended') return
+
+      const now = this.ctx.currentTime
+      ;[
+        { freq: 640, offset: 0 },
+        { freq: 440, offset: 0.025 },
+      ].forEach(({ freq, offset }) => {
+        if (!this.ctx) return
+        const osc = this.ctx.createOscillator()
+        const gain = this.ctx.createGain()
+        osc.type = 'sine'
+        osc.frequency.setValueAtTime(freq, now + offset)
+
+        gain.gain.setValueAtTime(0.001, now + offset)
+        gain.gain.linearRampToValueAtTime(0.12, now + offset + 0.001)
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.035)
+
+        osc.connect(gain)
+        gain.connect(this.ctx.destination)
+        osc.start(now + offset)
+        osc.stop(now + offset + 0.04)
+      })
     } catch (_) {}
   }
 }

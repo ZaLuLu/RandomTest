@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ScrollReveal } from '../ScrollReveal'
 import { SectionEyebrow } from '../SectionEyebrow'
+import { ambientAudio } from '../../utils/audioEngine'
 import {
   ArrowRight,
   Terminal,
@@ -39,14 +40,18 @@ export function PillarStack() {
           setComparingIdx([i, i + 1])
           setSwappedPair([i, i + 1])
           setStepMessage(`Swapped ${temp} ↔ ${arr[i]}`)
+          ambientAudio.playSortSwap(temp, arr[i], 100)
           swapped = true
           break
+        } else {
+          ambientAudio.playSortStep(arr[i], 100)
         }
       }
       if (!swapped) {
         setComparingIdx([0, 1])
         setSwappedPair(null)
         setStepMessage('Array in sorted order!')
+        ambientAudio.playSortComplete()
       }
       return arr
     })
@@ -54,6 +59,7 @@ export function PillarStack() {
   }
 
   const handleResetSort = () => {
+    ambientAudio.playSortReset()
     setArrayState([...INITIAL_ARRAY])
     setComparingIdx([0, 1])
     setSwappedPair(null)

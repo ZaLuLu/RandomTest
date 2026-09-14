@@ -47,6 +47,9 @@ export function SectionRailTracker({
   const lastScrollY = useRef(0)
   const lastScrollTime = useRef(Date.now())
   const prevActiveRef = useRef('home')
+  const skipSuppressRef = useRef(false)
+  const settleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const lastSoundTimeRef = useRef(0)
 
   const spineRef = useRef<HTMLDivElement>(null)
   const activeLineRef = useRef<HTMLDivElement>(null)
@@ -89,23 +92,65 @@ export function SectionRailTracker({
       }
 
       if (currentActive !== prevActiveRef.current) {
+        const prevIdx = RAIL_SECTIONS.findIndex((s) => s.id === prevActiveRef.current)
+        const currIdx = RAIL_SECTIONS.findIndex((s) => s.id === currentActive)
+        const indexDiff = Math.abs(currIdx - prevIdx)
+
         prevActiveRef.current = currentActive
         setActiveSection(currentActive)
-        if (velocity <= 3.5 && !ambientAudio.isSoundSuppressed()) {
-          ambientAudio.playScrollTick(velocity)
+
+        // If programmatic jump/click active, suppress intermediate scroll ticks
+        if (skipSuppressRef.current || ambientAudio.isSoundSuppressed()) {
+          return
+        }
+
+        if (indexDiff === 1 && velocity <= 4.0) {
+          // Normal sequential scroll into adjacent section: single notch click
+          if (now - lastSoundTimeRef.current > 140) {
+            lastSoundTimeRef.current = now
+            ambientAudio.playRailSectionTick(false)
+          }
+        } else if (indexDiff > 1 || velocity > 4.0) {
+          // Sections were skipped or fast flick: SUPPRESS intermediate sounds!
+          // Debounce: Play ONE single arrival confirmation tick once user settles on destination section
+          if (settleTimeoutRef.current) {
+            clearTimeout(settleTimeoutRef.current)
+          }
+          settleTimeoutRef.current = setTimeout(() => {
+            if (!ambientAudio.isSoundSuppressed() && !skipSuppressRef.current) {
+              ambientAudio.playRailSectionTick(true)
+            }
+          }, 180)
         }
       }
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (settleTimeoutRef.current) clearTimeout(settleTimeoutRef.current)
+    }
   }, [isHome])
 
   if (!isHome || device.isMobile) return null
 
   const handleDotClick = (id: string) => {
-    ambientAudio.playScrollTick(2.5)
+    // 1. Play immediate single confirmation click on the selected dot
+    ambientAudio.playRailSectionTick(true)
+
+    // 2. Suppress intermediate scroll section sound cascade during smooth navigation
+    skipSuppressRef.current = true
+    if (settleTimeoutRef.current) {
+      clearTimeout(settleTimeoutRef.current)
+      settleTimeoutRef.current = null
+    }
+
+    // Release suppression after smooth scroll completes
+    setTimeout(() => {
+      skipSuppressRef.current = false
+    }, 850)
+
     if (onScrollTo) {
       onScrollTo(id)
     } else {

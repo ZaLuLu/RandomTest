@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Play, Pause, FastForward, Shuffle, Swords, Zap, Binary, Layers, Terminal, RotateCcw } from 'lucide-react'
+import { ambientAudio } from '../../utils/audioEngine'
 
 type AlgorithmType = 'bubble' | 'selection' | 'quick' | 'merge' | 'binarySearch'
 
@@ -370,6 +371,7 @@ export function DiNotesVisualizer() {
     if (timerRef.current) clearInterval(timerRef.current)
     setIsPlaying(false)
     setDuelWinner(null)
+    ambientAudio.playSortReset()
     const newArr =
       algorithm === 'binarySearch'
         ? Array.from({ length: 14 }, (_, i) => (i + 1) * 6 + Math.floor(Math.random() * 4))
@@ -403,6 +405,18 @@ export function DiNotesVisualizer() {
     setSortedIndices(currentStep.sorted)
     setActiveCodeLine(currentStep.activeLine)
     if (currentStep.stackTrace) setStackTrace(currentStep.stackTrace)
+
+    if (currentStep.swapping && currentStep.swapping.length > 0) {
+      ambientAudio.playSortSwap()
+    } else if (currentStep.comparing && currentStep.comparing.length > 0) {
+      const idx = currentStep.comparing[0]
+      const val = currentStep.array[idx] ?? 50
+      ambientAudio.playSortStep(val, 100)
+    }
+
+    if (currentStepIdxRef.current === stepsRef.current.length - 1) {
+      ambientAudio.playSortComplete()
+    }
 
     currentStepIdxRef.current += 1
   }, [])

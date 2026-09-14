@@ -231,6 +231,7 @@ export function IntroSequence({ onHandoffStart, onComplete, forceReplay = false 
         // Fire handoff right as the shutters separate so the bounce is 100% visible
         .call(
           () => {
+            ambientAudio.unlock()
             onHandoffStart?.()
           },
           undefined,

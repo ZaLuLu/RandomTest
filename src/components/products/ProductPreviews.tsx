@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Terminal, Activity, CheckCircle2, Cpu, Play, Pause, RotateCcw } from 'lucide-react'
+import { ambientAudio } from '../../utils/audioEngine'
 
 // ── 1. DI NOTES VISUALIZER: LIGHTWEIGHT TABLET SORTING ENGINE ──
 export function DiNotesPreview() {
@@ -66,8 +67,10 @@ export function DiNotesPreview() {
         return next
       })
       setSwaps((s) => s + 1)
+      ambientAudio.playSortSwap(array[idx1] || 50, array[idx2] || 50, 100)
     } else {
       setSwapping([])
+      ambientAudio.playSortStep(array[idx1] || 50, 100)
     }
 
     setComparisons((c) => c + 1)
@@ -75,6 +78,7 @@ export function DiNotesPreview() {
   }
 
   const handleReset = () => {
+    ambientAudio.playSortReset()
     setArray([35, 78, 22, 90, 52, 28, 68, 15, 84])
     setComparing([])
     setSwapping([])

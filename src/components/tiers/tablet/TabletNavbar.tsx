@@ -101,6 +101,13 @@ export function TabletNavbar({ onScrollTo }: TabletNavbarProps) {
           >
             Workflow
           </button>
+          <button
+            type="button"
+            onClick={() => handleNavClick('social')}
+            className="px-2.5 py-1 rounded-lg hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] transition-colors cursor-pointer"
+          >
+            Dispatches
+          </button>
         </div>
 
         {/* Right Actions: Theme Toggle + 3D Connect Button */}

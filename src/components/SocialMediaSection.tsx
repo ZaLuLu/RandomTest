@@ -318,12 +318,16 @@ export function SocialMediaSection() {
 
   // Fetch user-uploaded posts from /social-posts/manifest.json
   useEffect(() => {
-    fetch('/social-posts/manifest.json')
+    let isMounted = true
+    const controller = new AbortController()
+
+    fetch('/social-posts/manifest.json', { signal: controller.signal })
       .then((res) => {
         if (!res.ok) throw new Error('No manifest found')
         return res.json()
       })
       .then((data) => {
+        if (!isMounted) return
         if (data && Array.isArray(data.posts) && data.posts.length > 0) {
           const mapped: InstagramPost[] = data.posts.map((p: any, idx: number) => ({
             id: p.id || `uploaded-post-${idx}`,
@@ -341,6 +345,11 @@ export function SocialMediaSection() {
         }
       })
       .catch(() => {})
+
+    return () => {
+      isMounted = false
+      controller.abort()
+    }
   }, [])
 
   const total = posts.length
@@ -727,9 +736,9 @@ export function SocialMediaSection() {
                 </button>
 
                 <div className="px-3.5 py-1.5 rounded-full border border-violet-500/30 bg-violet-950/20 backdrop-blur-md font-mono text-xs text-[var(--text-secondary)] shadow-inner">
-                  <span className="text-white font-bold font-mono">0{activeIndex + 1}</span>
+                  <span className="text-white font-bold font-mono">{String(activeIndex + 1).padStart(2, '0')}</span>
                   <span className="text-violet-400/70 mx-1">/</span>
-                  <span className="text-white/60">0{total}</span>
+                  <span className="text-white/60">{String(total).padStart(2, '0')}</span>
                 </div>
 
                 <button

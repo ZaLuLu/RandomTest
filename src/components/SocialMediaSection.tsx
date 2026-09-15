@@ -316,9 +316,7 @@ export function SocialMediaSection() {
   const device = useDeviceProfile()
   const isTouchOrMobile = device.isTouch || device.width < 1024
 
-  const [posts, setPosts] = useState<InstagramPost[]>(() =>
-    [...INSTAGRAM_POSTS].sort(() => Math.random() - 0.5)
-  )
+  const [posts, setPosts] = useState<InstagramPost[]>(INSTAGRAM_POSTS)
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const [likedPosts, setLikedPosts] = useState<Record<string, boolean>>({})
@@ -328,6 +326,7 @@ export function SocialMediaSection() {
   const dragStartX = useRef<number | null>(null)
   const dragDistance = useRef<number>(0)
   const isDragging = useRef<boolean>(false)
+  const isProgrammaticScroll = useRef<boolean>(false)
 
   // Fetch user-uploaded posts from /social-posts/manifest.json
   useEffect(() => {
@@ -378,13 +377,17 @@ export function SocialMediaSection() {
     if (!trackRef.current) return
     const card = trackRef.current.children[idx] as HTMLElement
     if (card) {
+      isProgrammaticScroll.current = true
       const targetLeft = card.offsetLeft - (trackRef.current.clientWidth - card.clientWidth) / 2
       trackRef.current.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' })
+      setTimeout(() => {
+        isProgrammaticScroll.current = false
+      }, 600)
     }
   }
 
   const handleTouchScroll = () => {
-    if (!trackRef.current) return
+    if (isProgrammaticScroll.current || !trackRef.current) return
     const scrollLeft = trackRef.current.scrollLeft
     const cards = Array.from(trackRef.current.children) as HTMLElement[]
     if (!cards.length) return
@@ -410,8 +413,12 @@ export function SocialMediaSection() {
       if (trackRef.current) {
         const card = trackRef.current.children[next] as HTMLElement
         if (card) {
+          isProgrammaticScroll.current = true
           const targetLeft = card.offsetLeft - (trackRef.current.clientWidth - card.clientWidth) / 2
           trackRef.current.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' })
+          setTimeout(() => {
+            isProgrammaticScroll.current = false
+          }, 600)
         }
       }
       return next
@@ -424,20 +431,24 @@ export function SocialMediaSection() {
       if (trackRef.current) {
         const card = trackRef.current.children[next] as HTMLElement
         if (card) {
+          isProgrammaticScroll.current = true
           const targetLeft = card.offsetLeft - (trackRef.current.clientWidth - card.clientWidth) / 2
           trackRef.current.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' })
+          setTimeout(() => {
+            isProgrammaticScroll.current = false
+          }, 600)
         }
       }
       return next
     })
   }, [total])
 
-  // Autoplay with hover pause (for desktop)
+  // Autoplay every 2 seconds (active for all device tiers, paused on active drag/interaction)
   useEffect(() => {
-    if (isPaused || isTouchOrMobile) return
-    const timer = setInterval(nextSlide, 4800)
+    if (isPaused) return
+    const timer = setInterval(nextSlide, 2000)
     return () => clearInterval(timer)
-  }, [isPaused, isTouchOrMobile, nextSlide])
+  }, [isPaused, nextSlide])
 
   // Horizontal trackpad two-finger scroll listener with gesture smoothing (desktop)
   useEffect(() => {
@@ -525,8 +536,6 @@ export function SocialMediaSection() {
       id="social"
       className="py-10 md:py-14 flex flex-col justify-center relative before:absolute before:inset-x-0 before:top-0 before:h-[1px] before:bg-gradient-to-r before:from-transparent before:via-[var(--border-base)] before:to-transparent scroll-mt-16 overflow-hidden touch-pan-y"
       aria-labelledby="social-headline"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
     >
       <div className="max-w-[1240px] mx-auto px-6 md:px-10 w-full touch-pan-y">
         {/* Eyebrow & Headline */}
@@ -620,6 +629,10 @@ export function SocialMediaSection() {
               <div
                 ref={trackRef}
                 onScroll={handleTouchScroll}
+                onTouchStart={() => setIsPaused(true)}
+                onTouchEnd={() => {
+                  setTimeout(() => setIsPaused(false), 1500)
+                }}
                 className="flex items-stretch overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar gap-4 px-1 py-4 touch-pan-x"
               >
                 {posts.map((item, idx) => (
@@ -685,6 +698,8 @@ export function SocialMediaSection() {
             <div
               ref={stageRef}
               className="relative min-h-[440px] sm:min-h-[480px] md:min-h-[510px] w-full flex items-center justify-center py-4 select-none perspective-1200 cursor-grab active:cursor-grabbing touch-pan-y"
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
               onTouchStart={handleTouchStart}
               onTouchEnd={handleTouchEnd}
               onMouseDown={handleTouchStart}

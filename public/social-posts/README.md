@@ -1,11 +1,14 @@
 # Social Media Carousel Posts
 
-You can drop your Instagram / social media post images into this folder:
-`public/social-posts/`
+This directory contains real social post assets for the Nayak Labs Engineering Dispatches carousel.
 
-### How It Works:
-1. Put image files (e.g. `post-1.png`, `post-2.jpg`, `custom-post.webp`, etc.) in this directory.
-2. The website will automatically fetch `/social-posts/manifest.json`.
-3. Add any new image path and post text to `manifest.json`.
-4. On every page load/reload, posts from this directory are randomized/shuffled so fresh content appears on the carousel.
-5. The avatar strictly uses `/NayakLabs.png`.
+### Active Media Files:
+- `NLpost1.jpeg` — "How AI understands meaning" (Embeddings & Semantic Search)
+- `NLpost2.jpeg` — "Retrieval-Augmented Generation" (When LLMs don't just guess)
+- `NLpost3.jpeg` — "Why RAG Exists" (Guessing vs Grounded reasoning)
+- `NLpost4.jpeg` — "How AI measures similarity" (Cosine Similarity & Vector Geometry)
+- `Nayaklabs_Logo.jpeg` — Official Nayak Labs brandmark / avatar logo
+
+### Configuration:
+- `manifest.json` configures post IDs, image paths, slide counts, tags, and captions.
+- The social carousel dynamically loads posts and falls back to pre-configured educational dispatches.

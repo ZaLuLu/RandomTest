@@ -14,8 +14,8 @@ import {
 } from 'lucide-react'
 import { useDeviceProfile } from '../utils/useDeviceProfile'
 import { ambientAudio } from '../utils/audioEngine'
-import nayakLabsImg from '../assets/NayakLabs.png'
-const nayakLabsLogoImg = nayakLabsImg
+import nayakLabsLogoImg from '../../Nayaklabs_Logo.jpeg'
+const nayakLabsImg = nayakLabsLogoImg
 
 export interface InstagramPost {
   id: string
@@ -33,63 +33,63 @@ export interface InstagramPost {
 export const INSTAGRAM_POSTS: InstagramPost[] = [
   {
     id: 'post-1',
-    image: nayakLabsLogoImg,
-    caption: 'Shipped v2.0 of Event Mesh 3D — interactive event topology with global latency clustering and live hub filtering.',
+    image: '/social-posts/NLpost1.jpeg',
+    caption: 'How AI understands meaning: Words are just text to a computer — embeddings change that. Words in, numbers out, meaning preserved. A deep dive into semantic vector spaces.',
     date: '2d ago',
     postUrl: 'https://www.instagram.com/nayaklabs.ai?stkn=MXd0eGJwcjVvZDB5dw==',
-    tag: '#BuildLog',
-    likesCount: 1420,
-    commentsCount: 38,
-    slideCount: '1/4',
-    location: 'Studio Bengaluru',
+    tag: '#Embeddings',
+    likesCount: 2480,
+    commentsCount: 64,
+    slideCount: '01/09',
+    location: 'AI Research Lab',
   },
   {
     id: 'post-2',
-    image: nayakLabsImg,
-    caption: 'Why we rewrote DI Notes visualizer in clean Canvas instead of heavy WebGL: reducing bundle sizes and improving low-end mobile performance.',
+    image: '/social-posts/NLpost2.jpeg',
+    caption: "Retrieval-Augmented Generation (RAG): When LLMs don't just guess — they actually look things up. Transitioning from static Text AI to grounded, real-time Multimodal intelligence.",
     date: '4d ago',
     postUrl: 'https://www.instagram.com/nayaklabs.ai?stkn=MXd0eGJwcjVvZDB5dw==',
-    tag: '#Architecture',
-    likesCount: 2380,
-    commentsCount: 54,
-    slideCount: '1/6',
-    location: 'Engineering',
+    tag: '#PromptEngineering',
+    likesCount: 3190,
+    commentsCount: 89,
+    slideCount: '01/07',
+    location: 'Bengaluru Studio',
   },
   {
     id: 'post-3',
-    image: nayakLabsLogoImg,
-    caption: 'Applications are open for our upcoming engineering cohort. Small groups, live code reviews, and building real production software.',
+    image: '/social-posts/NLpost3.jpeg',
+    caption: 'Why RAG Exists: Why AI needed a better way to find information. Moving from guessing to grounded context across 6 sections in plain English.',
     date: '1w ago',
     postUrl: 'https://www.instagram.com/nayaklabs.ai?stkn=MXd0eGJwcjVvZDB5dw==',
-    tag: '#Training',
-    likesCount: 3120,
-    commentsCount: 82,
-    slideCount: '1/5',
-    location: 'Academy',
+    tag: '#GenerativeAI',
+    likesCount: 4120,
+    commentsCount: 115,
+    slideCount: '01/15',
+    location: 'Systems Architecture',
   },
   {
     id: 'post-4',
-    image: nayakLabsImg,
-    caption: 'Event Mesh crossed 500+ active developer summits, systems workshops, and hackathons listed across tech hubs.',
+    image: '/social-posts/NLpost4.jpeg',
+    caption: 'How AI measures similarity: Not comparing words — comparing angles. Cosine similarity and the vector mathematics powering modern semantic search engines.',
     date: '2w ago',
     postUrl: 'https://www.instagram.com/nayaklabs.ai?stkn=MXd0eGJwcjVvZDB5dw==',
-    tag: '#Community',
-    likesCount: 1890,
-    commentsCount: 41,
-    slideCount: '1/3',
-    location: 'Event Mesh',
+    tag: '#CosineSimilarity',
+    likesCount: 3640,
+    commentsCount: 78,
+    slideCount: '01/10',
+    location: 'Vector Math',
   },
   {
     id: 'post-5',
-    image: nayakLabsImg,
-    caption: 'How we built an internal ops automation tool for a growing brand in 6 weeks — from scoping to production deployment.',
-    date: '3w ago',
+    image: nayakLabsLogoImg,
+    caption: 'Nayak Labs: Pioneering agentic engineering, high-performance distributed systems, and real-time AI architectures from Bengaluru. Welcome to our engineering journal.',
+    date: 'Featured',
     postUrl: 'https://www.instagram.com/nayaklabs.ai?stkn=MXd0eGJwcjVvZDB5dw==',
-    tag: '#CaseStudy',
-    likesCount: 4500,
-    commentsCount: 112,
-    slideCount: '1/8',
-    location: 'Services',
+    tag: '#NayakLabs',
+    likesCount: 5280,
+    commentsCount: 142,
+    slideCount: 'Brand',
+    location: 'Bengaluru, IN',
   },
 ]
 
@@ -151,14 +151,14 @@ function InstagramCard({
 
       {/* 1. COMPACT INSTAGRAM HEADER */}
       <div className="px-3 py-2 sm:px-3.5 sm:py-2.5 flex items-center justify-between border-b border-[var(--border-base)] bg-[var(--bg-surface)]/90 backdrop-blur-sm">
-        <div className="flex items-center gap-2 min-w-0">
+        <div className="flex items-center gap-2.5 min-w-0">
           {/* Story Gradient Ring */}
-          <div className="w-7 h-7 rounded-full p-[1.5px] bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] shrink-0 flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-[var(--bg-surface)] p-[1px] flex items-center justify-center overflow-hidden">
+          <div className="w-8 h-8 rounded-full p-[1.5px] bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] shrink-0 flex items-center justify-center shadow-xs">
+            <div className="w-full h-full rounded-full bg-[#F4ECE1] p-1 flex items-center justify-center overflow-hidden">
               <img
                 src={nayakLabsLogoImg}
                 alt="nayaklabs.ai"
-                className="w-full h-full object-cover rounded-full"
+                className="w-full h-full object-contain object-center scale-110"
               />
             </div>
           </div>
@@ -192,21 +192,34 @@ function InstagramCard({
       </div>
 
       {/* 2. 1:1 SQUARE IMAGE SLOT */}
-      <div className="relative w-full aspect-square bg-[#050508] overflow-hidden flex items-center justify-center">
+      <div className="relative w-full aspect-square bg-[#0c0d12] overflow-hidden flex items-center justify-center">
         <img
           src={item.image}
           alt={item.caption}
-          className="w-full h-full object-cover select-none pointer-events-none transition-transform duration-500 ease-out-expo group-hover:scale-[1.02]"
+          className={`w-full h-full ${
+            item.image === nayakLabsLogoImg
+              ? 'object-contain bg-[#F4ECE1] p-6'
+              : 'object-cover bg-white'
+          } select-none pointer-events-none transition-transform duration-500 ease-out-expo group-hover:scale-[1.02]`}
           draggable={false}
           loading="lazy"
         />
 
         {/* Floating Carousel Slide Tag */}
         {item.slideCount && (
-          <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md font-mono text-[10px] font-semibold text-white/90 border border-white/10 pointer-events-none">
-            {item.slideCount}
+          <div className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-black/75 backdrop-blur-md font-mono text-[10px] font-semibold text-white/95 border border-white/15 pointer-events-none shadow-sm flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#3897f0]" />
+            <span>{item.slideCount}</span>
           </div>
         )}
+
+        {/* Hover Action Hint */}
+        <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+          <span className="px-3 py-1.5 rounded-full bg-black/85 backdrop-blur-md border border-white/20 font-mono text-xs text-white font-medium shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 flex items-center gap-1.5">
+            <ExternalLink className="w-3.5 h-3.5 text-[#3897f0]" />
+            <span>View on Instagram</span>
+          </span>
+        </div>
       </div>
 
       {/* 3. TIGHT INSTAGRAM FOOTER */}
@@ -331,7 +344,12 @@ export function SocialMediaSection() {
         if (data && Array.isArray(data.posts) && data.posts.length > 0) {
           const mapped: InstagramPost[] = data.posts.map((p: any, idx: number) => ({
             id: p.id || `uploaded-post-${idx}`,
-            image: p.image || nayakLabsLogoImg,
+            image:
+              p.image === 'logo' ||
+              p.image === '/social-posts/Nayaklabs_Logo.jpeg' ||
+              p.image === '/Nayaklabs_Logo.jpeg'
+                ? nayakLabsLogoImg
+                : p.image || nayakLabsLogoImg,
             caption: p.caption || '',
             date: p.date || 'Recent',
             postUrl: p.postUrl || 'https://www.instagram.com/nayaklabs.ai?stkn=MXd0eGJwcjVvZDB5dw==',
@@ -341,7 +359,7 @@ export function SocialMediaSection() {
             slideCount: p.slideCount || '1/4',
             location: p.location || 'Studio Bengaluru',
           }))
-          setPosts([...mapped].sort(() => Math.random() - 0.5))
+          setPosts(mapped)
         }
       })
       .catch(() => {})
@@ -519,6 +537,66 @@ export function SocialMediaSection() {
         </div>
 
         <ScrollReveal delay={0.08}>
+          {/* Official Brand Profile Banner */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 p-4 sm:p-5 rounded-2xl border border-[var(--border-base)] bg-[var(--bg-surface)]/80 backdrop-blur-md relative overflow-hidden shadow-xs">
+            <div className="absolute top-0 right-0 w-72 h-full bg-gradient-to-l from-violet-500/10 via-[#fd1d1d]/5 to-transparent pointer-events-none blur-xl" />
+
+            <div className="flex items-center gap-3.5 z-10">
+              <div className="relative shrink-0">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full p-[2px] bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] shadow-md flex items-center justify-center">
+                  <div className="w-full h-full rounded-full bg-[#F4ECE1] p-1 flex items-center justify-center overflow-hidden">
+                    <img
+                      src={nayakLabsLogoImg}
+                      alt="Nayak Labs"
+                      className="w-full h-full object-contain object-center scale-110"
+                    />
+                  </div>
+                </div>
+                <span className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-[var(--bg-surface)]" title="Active Dispatches" />
+              </div>
+
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <span className="font-mono text-base sm:text-lg font-bold text-[var(--text-primary)] tracking-tight">
+                    nayaklabs.ai
+                  </span>
+                  <CheckCircle2 className="w-4 h-4 text-[#3897f0] fill-[#3897f0] text-white" />
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-violet-500/15 text-violet-400 border border-violet-500/30 font-semibold hidden sm:inline-block">
+                    Official Dispatches
+                  </span>
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-body mt-0.5">
+                  Engineering logs, systems architecture, and AI research from Bengaluru.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2.5 z-10 self-start md:self-auto">
+              <div className="hidden sm:flex items-center gap-3 px-3 py-1.5 rounded-xl border border-[var(--border-base)] bg-[var(--bg-surface)]/60 font-mono text-xs text-[var(--text-secondary)]">
+                <div>
+                  <span className="font-bold text-[var(--text-primary)]">4+</span>{' '}
+                  <span className="text-[var(--text-muted)]">Slides</span>
+                </div>
+                <span className="w-1 h-1 rounded-full bg-[var(--border-strong)]" />
+                <div>
+                  <span className="font-bold text-[var(--text-primary)]">Weekly</span>{' '}
+                  <span className="text-[var(--text-muted)]">Dispatches</span>
+                </div>
+              </div>
+
+              <a
+                href="https://www.instagram.com/nayaklabs.ai?stkn=MXd0eGJwcjVvZDB5dw=="
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full font-mono text-xs font-semibold bg-gradient-to-r from-[#833ab4] via-[#dc2743] to-[#f09433] hover:opacity-95 text-white shadow-[0_4px_16px_rgba(220,39,67,0.35)] transition-all transform active:scale-95 group cursor-pointer"
+              >
+                <InstagramLogoSvg className="w-3.5 h-3.5 text-white" />
+                <span>Follow @nayaklabs.ai</span>
+                <ExternalLink className="w-3 h-3 text-white/80 group-hover:translate-x-0.5 transition-transform" />
+              </a>
+            </div>
+          </div>
+
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
             <div className="max-w-xl">
               <h2
@@ -528,21 +606,9 @@ export function SocialMediaSection() {
                 Behind the Build.
               </h2>
               <p className="font-body text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
-                Engineering logs, technical writeups, and platform releases directly from our builders in Bengaluru.
+                Technical slide carousels on embeddings, retrieval-augmented generation, and vector mathematics directly from our builders.
               </p>
             </div>
-
-            {/* Direct Profile CTA Button */}
-            <a
-              href="https://www.instagram.com/nayaklabs.ai?stkn=MXd0eGJwcjVvZDB5dw=="
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-mono text-xs font-semibold bg-gradient-to-r from-[#833ab4]/15 via-[#fd1d1d]/15 to-[#fcb045]/15 hover:from-[#833ab4]/25 hover:via-[#fd1d1d]/25 hover:to-[#fcb045]/25 border border-[var(--border-base)] text-[var(--text-primary)] transition-all shrink-0 self-start sm:self-end shadow-2xs group"
-            >
-              <InstagramLogoSvg className="w-3.5 h-3.5 text-[#E1306C]" />
-              <span>@nayaklabs.ai</span>
-              <ExternalLink className="w-3 h-3 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors" />
-            </a>
           </div>
         </ScrollReveal>
 

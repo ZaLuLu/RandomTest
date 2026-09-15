@@ -2,53 +2,63 @@
   "posts": [
     {
       "id": "post-1",
-      "image": "/social-posts/post-1.png",
-      "caption": "Shipped v2.0 of Event Mesh 3D — interactive event topology with global latency clustering and live hub filtering.",
-      "tag": "#BuildLog",
-      "likesCount": 1420,
-      "commentsCount": 38,
+      "image": "/social-posts/NLpost1.jpeg",
+      "caption": "How AI understands meaning: Words are just text to a computer — embeddings change that. Words in, numbers out, meaning preserved. A deep dive into semantic vector spaces.",
+      "tag": "#Embeddings",
+      "likesCount": 2480,
+      "commentsCount": 64,
+      "slideCount": "01/09",
       "date": "2d ago",
-      "location": "Studio Bengaluru"
+      "location": "AI Research Lab",
+      "postUrl": "https://www.instagram.com/nayaklabs.ai?stkn=MXd0eGJwcjVvZDB5dw=="
     },
     {
       "id": "post-2",
-      "image": "/social-posts/post-2.png",
-      "caption": "Why we rewrote DI Notes visualizer in clean Canvas instead of heavy WebGL: reducing bundle sizes and improving low-end mobile performance.",
-      "tag": "#Architecture",
-      "likesCount": 2380,
-      "commentsCount": 54,
+      "image": "/social-posts/NLpost2.jpeg",
+      "caption": "Retrieval-Augmented Generation (RAG): When LLMs don't just guess — they actually look things up. Transitioning from static Text AI to grounded, real-time Multimodal intelligence.",
+      "tag": "#PromptEngineering",
+      "likesCount": 3190,
+      "commentsCount": 89,
+      "slideCount": "01/07",
       "date": "4d ago",
-      "location": "Engineering"
+      "location": "Bengaluru Studio",
+      "postUrl": "https://www.instagram.com/nayaklabs.ai?stkn=MXd0eGJwcjVvZDB5dw=="
     },
     {
       "id": "post-3",
-      "image": "/social-posts/post-3.png",
-      "caption": "Applications are open for our upcoming engineering cohort. Small groups, live code reviews, and building real production software.",
-      "tag": "#Training",
-      "likesCount": 3120,
-      "commentsCount": 82,
+      "image": "/social-posts/NLpost3.jpeg",
+      "caption": "Why RAG Exists: Why AI needed a better way to find information. Moving from guessing to grounded context across 6 sections in plain English.",
+      "tag": "#GenerativeAI",
+      "likesCount": 4120,
+      "commentsCount": 115,
+      "slideCount": "01/15",
       "date": "1w ago",
-      "location": "Academy"
+      "location": "Systems Architecture",
+      "postUrl": "https://www.instagram.com/nayaklabs.ai?stkn=MXd0eGJwcjVvZDB5dw=="
     },
     {
       "id": "post-4",
-      "image": "/social-posts/post-4.png",
-      "caption": "Event Mesh crossed 500+ active developer summits, systems workshops, and hackathons listed across tech hubs.",
-      "tag": "#Community",
-      "likesCount": 1890,
-      "commentsCount": 41,
+      "image": "/social-posts/NLpost4.jpeg",
+      "caption": "How AI measures similarity: Not comparing words — comparing angles. Cosine similarity and the vector mathematics powering modern semantic search engines.",
+      "tag": "#CosineSimilarity",
+      "likesCount": 3640,
+      "commentsCount": 78,
+      "slideCount": "01/10",
       "date": "2w ago",
-      "location": "Event Mesh"
+      "location": "Vector Math",
+      "postUrl": "https://www.instagram.com/nayaklabs.ai?stkn=MXd0eGJwcjVvZDB5dw=="
     },
     {
       "id": "post-5",
-      "image": "/social-posts/post-5.png",
-      "caption": "How we built an internal ops automation tool for a growing brand in 6 weeks — from scoping to production deployment.",
-      "tag": "#CaseStudy",
-      "likesCount": 4500,
-      "commentsCount": 112,
-      "date": "3w ago",
-      "location": "Services"
+      "image": "logo",
+      "caption": "Nayak Labs: Pioneering agentic engineering, high-performance distributed systems, and real-time AI architectures from Bengaluru. Welcome to our engineering journal.",
+      "tag": "#NayakLabs",
+      "likesCount": 5280,
+      "commentsCount": 142,
+      "slideCount": "Brand",
+      "date": "Featured",
+      "location": "Bengaluru, IN",
+      "postUrl": "https://www.instagram.com/nayaklabs.ai?stkn=MXd0eGJwcjVvZDB5dw=="
     }
   ]
 }

@@ -193,29 +193,29 @@ export function Navbar({ onScrollTo, onReplayIntro }: NavbarProps) {
     <>
       <header className="fixed top-3 sm:top-4 inset-x-0 z-50 flex justify-center px-4 pointer-events-none transition-all duration-300">
         <nav
-          className={`pointer-events-auto max-w-[760px] w-full px-4 sm:px-5 h-12 rounded-full navbar-glass transition-all duration-300 flex items-center justify-between shadow-xl ${scrolled ? 'border-[var(--border-hover)]' : 'border-[var(--border-base)]'
+          className={`pointer-events-auto max-w-[860px] w-full px-3.5 sm:px-5 h-12 rounded-full navbar-glass transition-all duration-300 flex items-center justify-between gap-2 shadow-xl ${scrolled ? 'border-[var(--border-hover)]' : 'border-[var(--border-base)]'
             }`}
           aria-label="Primary navigation"
         >
           {/* Brand Wordmark with Precision Status Pulse */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center shrink-0">
             <Link
               to="/"
               onClick={handleBrandClick}
-              className="flex items-center gap-2 group cursor-pointer bg-transparent border-none text-left select-none pl-1"
+              className="inline-flex items-center gap-1.5 group cursor-pointer bg-transparent border-none text-left select-none whitespace-nowrap shrink-0 pl-1"
               aria-label="Nayak Labs — home"
             >
-              <span className="font-display font-bold text-[var(--text-primary)] text-sm sm:text-base tracking-tight transition-opacity duration-200 group-hover:opacity-85">
+              <span className="font-display font-bold text-[var(--text-primary)] text-sm sm:text-base tracking-tight whitespace-nowrap transition-opacity duration-200 group-hover:opacity-85">
                 Nayak Labs
               </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] inline-block shadow-[0_0_8px_var(--accent-primary)]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] shrink-0 inline-block shadow-[0_0_8px_var(--accent-primary)]" />
             </Link>
           </div>
 
           {/* Desktop Nav Links with High-Contrast Frosted Sliding Highlight Indicator */}
           <div
             ref={navLinksContainerRef}
-            className="hidden md:flex items-center relative p-0.5 rounded-full text-xs font-medium"
+            className="hidden md:flex items-center relative p-0.5 rounded-full text-xs font-medium shrink-0"
           >
             {/* Smooth Floating Background Highlight Pill */}
             <div
@@ -238,7 +238,7 @@ export function Navbar({ onScrollTo, onReplayIntro }: NavbarProps) {
                   key={link.label}
                   ref={(el) => (linkRefs.current[link.id] = el)}
                   onClick={() => handleNavClick(link)}
-                  className={`relative z-10 px-3.5 py-1.5 rounded-full transition-colors duration-200 cursor-pointer font-body text-xs select-none ${active
+                  className={`relative z-10 px-2.5 lg:px-3.5 py-1.5 rounded-full transition-colors duration-200 cursor-pointer font-body text-xs whitespace-nowrap select-none ${active
                       ? isDark
                         ? 'text-white font-bold'
                         : 'text-[var(--text-primary)] font-bold'
@@ -252,7 +252,7 @@ export function Navbar({ onScrollTo, onReplayIntro }: NavbarProps) {
           </div>
 
           {/* Action Area: Theme Switcher + Connect Button */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             {/* Theme Toggle */}
             <button
               onClick={() => toggleThemeMode()}

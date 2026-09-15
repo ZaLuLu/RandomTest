@@ -5,7 +5,7 @@ import { GrainOverlay } from '../components/GrainOverlay'
 import { GlobalCanvasBackground } from '../components/ui/GlobalCanvasBackground'
 import { Footer } from '../components/Footer'
 import { ScrollReveal } from '../components/ScrollReveal'
-import { TierNavbarDispatcher } from '../components/tiers/TierDispatcher'
+import { Navbar } from '../components/Navbar'
 import { DiNotesVisualizer } from '../components/products/DiNotesVisualizer'
 import { EventMeshRadar } from '../components/products/EventMeshRadar'
 
@@ -74,12 +74,12 @@ export default function ProductsPage() {
   const [mobileActiveProduct, setMobileActiveProduct] = useState<'di-notes' | 'event-mesh'>('di-notes')
 
   return (
-    <div className="min-h-screen bg-transparent text-[var(--text-primary)] relative selection:bg-[var(--accent-primary)] selection:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-transparent text-[var(--text-primary)] relative selection:bg-[var(--accent-primary)] selection:text-white transition-colors duration-300 select-none">
       <GrainOverlay />
       <GlobalCanvasBackground />
 
-      {/* Multi-Tier Responsive Navbar */}
-      <TierNavbarDispatcher />
+      {/* Modern Responsive Navbar */}
+      <Navbar />
 
       {/* Main Container */}
       <main className="pt-20 sm:pt-28 pb-24 sm:pb-40 px-4 sm:px-8 md:px-12 max-w-[1360px] mx-auto relative z-10">

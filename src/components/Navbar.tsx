@@ -23,6 +23,7 @@ const NAV_LINKS: NavLinkItem[] = [
   { label: 'Services', num: '02', id: 'services', pagePath: '/services', isSubpage: true },
   { label: 'Academics', num: '03', id: 'academics', pagePath: '/academics', isSubpage: true },
   { label: 'Workflow', num: '04', id: 'why-us', pagePath: '/', isSubpage: false },
+  { label: 'Dispatches', num: '05', id: 'social', pagePath: '/', isSubpage: false },
 ]
 
 export function Navbar({ onScrollTo, onReplayIntro }: NavbarProps) {
@@ -68,9 +69,9 @@ export function Navbar({ onScrollTo, onReplayIntro }: NavbarProps) {
       setScrolled(window.scrollY > 20)
 
       // Section tracking on homepage:
-      // Highlighting Home when at the top, and Products, Services, Academics, Workflow as user scrolls
+      // Highlighting Home when at the top, and Products, Services, Academics, Workflow, Dispatches as user scrolls
       const scrollPos = window.scrollY + 220
-      const checkSections = ['products', 'services', 'academics', 'why-us']
+      const checkSections = ['products', 'services', 'academics', 'why-us', 'social']
       let currentSection = 'home'
 
       for (let i = checkSections.length - 1; i >= 0; i--) {

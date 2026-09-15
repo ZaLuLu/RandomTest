@@ -8,20 +8,17 @@ import { ThemeProvider } from './utils/themeContext'
 import { GrainOverlay } from './components/GrainOverlay'
 import { GlobalCanvasBackground } from './components/ui/GlobalCanvasBackground'
 import { SEOHead } from './components/seo/SEOHead'
-import {
-  TierNavbarDispatcher,
-  TierHeroDispatcher,
-  TierPillarStackDispatcher,
-  TierMarqueeDispatcher,
-  TierAboutDispatcher,
-  TierWhyChooseUsDispatcher,
-  TierContactDispatcher,
-} from './components/tiers/TierDispatcher'
+import { Navbar } from './components/Navbar'
+import { Hero3D } from './components/Hero3D'
+import { PillarStack } from './components/pillars/PillarStack'
+import { About } from './components/About'
+import { WhyChooseUs } from './components/WhyChooseUs'
+import { Contact } from './components/Contact'
 import { SocialMediaSection } from './components/SocialMediaSection'
 import { Footer } from './components/Footer'
 import { IntroSequence } from './components/intro/IntroSequence'
 import { SectionRailTracker } from './components/ui/SectionRailTracker'
-import { TargetCursor } from './components/ui/react-bits'
+import { TargetCursor, CurvedLoop } from './components/ui/react-bits'
 
 import { useDeviceProfile } from './utils/useDeviceProfile'
 import { ambientAudio } from './utils/audioEngine'
@@ -259,12 +256,12 @@ function MainLayout() {
 
       {/* Main layout is rendered in natural flow */}
       <div className="relative w-full">
-        <TierNavbarDispatcher onScrollTo={scrollTo} onReplayIntro={isDesktopIntroTarget ? handleReplayIntro : undefined} />
+        <Navbar onScrollTo={scrollTo} onReplayIntro={isDesktopIntroTarget ? handleReplayIntro : undefined} />
         <SectionRailTracker onScrollTo={scrollTo} ignited={railIgnited} isIntroTarget={isDesktopIntroTarget} />
 
         <main id="home">
           {/* Act 1: Hero Section */}
-          <TierHeroDispatcher
+          <Hero3D
             visible={heroAwake || introFinished || !isDesktopIntroTarget}
             isIntroHandoff={isIntroHandoff}
             onScrollToDivision={scrollTo}
@@ -272,30 +269,38 @@ function MainLayout() {
           />
 
           {/* Act 2: Dedicated Division Sections (P, S, A) */}
-          <TierPillarStackDispatcher />
+          <PillarStack />
 
           {/* Ribbon Marquee #1 */}
-          <TierMarqueeDispatcher
+          <CurvedLoop
             text="FASTAPI BACKENDS • NEXT.JS FRONTENDS • DEVELOPER TOOLS • CLEAN ARCHITECTURE • 100% CODE OWNERSHIP • "
+            speed={0.065}
+            fontSize={15}
+            curveHeight={22}
+            className="w-full my-1 opacity-95"
           />
 
           {/* Act 3: Studio Manifesto & Telemetry */}
-          <TierAboutDispatcher />
+          <About />
 
           {/* Act 4: Milestones & Delivery Blueprint */}
-          <TierWhyChooseUsDispatcher />
+          <WhyChooseUs />
 
           {/* Act 5: Community & Dispatch (All Devices) */}
           <SocialMediaSection />
 
           {/* Ribbon Marquee #2 (All Devices) */}
-          <TierMarqueeDispatcher
+          <CurvedLoop
             text="PRODUCTION CODEBASES • REST & WEBSOCKET APIS • POSTGRESQL & REDIS • ZERO CLOUD LOCK-IN • DIRECT ACCESS • "
             direction="right"
+            speed={0.065}
+            fontSize={15}
+            curveHeight={22}
+            className="w-full my-1 opacity-95"
           />
 
           {/* Act 6: Direct Founders Contact */}
-          <TierContactDispatcher />
+          <Contact />
         </main>
 
         <Footer onScrollTo={scrollTo} onReplayIntro={handleReplayIntro} />

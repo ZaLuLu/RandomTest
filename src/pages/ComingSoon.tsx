@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { TierNavbarDispatcher } from '../components/tiers/TierDispatcher'
+import { Navbar } from '../components/Navbar'
 import { GrainOverlay } from '../components/GrainOverlay'
 import { GlobalCanvasBackground } from '../components/ui/GlobalCanvasBackground'
 
@@ -11,7 +11,7 @@ export default function ComingSoon() {
     <div className="min-h-screen bg-transparent flex flex-col items-center justify-center px-6 text-center text-[var(--text-primary)] relative transition-colors duration-300">
       <GrainOverlay />
       <GlobalCanvasBackground />
-      <TierNavbarDispatcher />
+      <Navbar />
 
       <div className="flex flex-col items-center gap-8 max-w-lg mx-auto pt-16">
         <div className="glass-pill">

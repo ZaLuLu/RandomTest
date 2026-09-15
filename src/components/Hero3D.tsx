@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowDown, ArrowRight, Terminal, Globe, GraduationCap, Code2, Cpu, Zap, Layers, MessageSquare } from 'lucide-react'
+import { ArrowDown, ArrowRight, Terminal, Globe, GraduationCap, Code2, Cpu, Zap, Layers, MessageSquare, Mail } from 'lucide-react'
 import { BorderBeam } from './ui/BorderBeam'
 import { CrowdCanvas } from './ui/skiper-ui/skiper39'
 import { useDeviceProfile } from '../utils/useDeviceProfile'
@@ -792,20 +792,18 @@ export function Hero3D({
               <ArrowDown className="w-3.5 h-3.5" />
             </button>
             <a
-              href="https://wa.me/?text=Hello%20Nayak%20Labs%20Team"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="mailto:nayaklabs.ai@gmail.com?subject=Project%20Inquiry%20%E2%80%94%20Nayak%20Labs"
               className="py-2.5 px-4 rounded-xl border border-[var(--border-base)] bg-[var(--bg-surface)] text-[var(--text-primary)] font-body font-medium text-xs flex items-center justify-center gap-1.5 transition-transform active:scale-95"
             >
-              <MessageSquare className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
-              <span>Message Us</span>
+              <Mail className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
+              <span>Email Us</span>
             </a>
           </div>
 
           {/* 5. Mobile Division Deck Section */}
           <div id="mobile-divisions-section" className="w-full max-w-sm mx-auto flex flex-col items-center text-center scroll-mt-28 pt-8">
             <h2 className="font-display font-bold text-xl tracking-tight mb-2 text-[var(--text-primary)] px-2">
-              Three things we do really well.
+              Three things we do really well
             </h2>
             <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-6 px-2">
               Enterprise software platforms, specialized engineering pods, and technical academies.
@@ -820,7 +818,7 @@ export function Hero3D({
               {/* Card 01: Products */}
               <Link
                 to="/products"
-                className="card-tactile drafting-card p-5 flex flex-col justify-between group cursor-pointer relative overflow-hidden w-[85vw] max-w-[320px] min-h-[200px]"
+                className="card-tactile drafting-card p-5 flex flex-col justify-between group cursor-pointer relative overflow-hidden w-[85vw] max-w-[320px] min-h-[210px]"
               >
                 <BorderBeam size={180} duration={12} colorFrom="var(--accent-primary)" colorTo="var(--accent-secondary)" />
                 <div>
@@ -835,9 +833,17 @@ export function Hero3D({
                   <h3 className="font-display font-bold text-base text-[var(--text-primary)] mb-1">
                     Products & Platforms
                   </h3>
-                  <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-3">
+                  <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-2.5">
                     Interactive tools, visual learning platforms, and curated networks built for everyday use.
                   </p>
+                  <div className="flex flex-wrap gap-1.5 font-body text-[10px] text-[var(--text-muted)] mb-2.5">
+                    <span className="px-2 py-0.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-base)]">
+                      Event Mesh
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-base)]">
+                      DI Notes
+                    </span>
+                  </div>
                 </div>
                 <div className="pt-2.5 border-t border-[var(--border-base)] flex items-center justify-between font-body text-xs text-[var(--accent-primary)] font-semibold">
                   <span>Explore products</span>
@@ -848,7 +854,7 @@ export function Hero3D({
               {/* Card 02: Services */}
               <Link
                 to="/services"
-                className="card-tactile drafting-card p-5 flex flex-col justify-between group cursor-pointer relative overflow-hidden w-[85vw] max-w-[320px] min-h-[200px]"
+                className="card-tactile drafting-card p-5 flex flex-col justify-between group cursor-pointer relative overflow-hidden w-[85vw] max-w-[320px] min-h-[210px]"
               >
                 <BorderBeam size={180} duration={12} delay={4} colorFrom="var(--accent-secondary)" colorTo="var(--accent-primary)" />
                 <div>
@@ -863,9 +869,17 @@ export function Hero3D({
                   <h3 className="font-display font-bold text-base text-[var(--text-primary)] mb-1">
                     Engineering Services
                   </h3>
-                  <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-3">
+                  <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-2.5">
                     Dedicated engineering teams building modern web applications, FastAPI backends, and cloud infrastructure.
                   </p>
+                  <div className="flex flex-wrap gap-1.5 font-body text-[10px] text-[var(--text-muted)] mb-2.5">
+                    <span className="px-2 py-0.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-base)]">
+                      Web Applications
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-base)]">
+                      Cloud Infrastructure
+                    </span>
+                  </div>
                 </div>
                 <div className="pt-2.5 border-t border-[var(--border-base)] flex items-center justify-between font-body text-xs text-[var(--accent-secondary)] font-semibold">
                   <span>View services</span>
@@ -876,7 +890,7 @@ export function Hero3D({
               {/* Card 03: Academics */}
               <Link
                 to="/academics"
-                className="card-tactile drafting-card p-5 flex flex-col justify-between group cursor-pointer relative overflow-hidden w-[85vw] max-w-[320px] min-h-[200px]"
+                className="card-tactile drafting-card p-5 flex flex-col justify-between group cursor-pointer relative overflow-hidden w-[85vw] max-w-[320px] min-h-[210px]"
               >
                 <BorderBeam size={180} duration={12} delay={8} colorFrom="var(--accent-tertiary)" colorTo="var(--accent-secondary)" />
                 <div>
@@ -891,12 +905,20 @@ export function Hero3D({
                   <h3 className="font-display font-bold text-base text-[var(--text-primary)] mb-1">
                     Technical Training
                   </h3>
-                  <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-3">
+                  <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-2.5">
                     Hands-on training in real-world systems architecture, backend engineering, and production codebases.
                   </p>
+                  <div className="flex flex-wrap gap-1.5 font-body text-[10px] text-[var(--text-muted)] mb-2.5">
+                    <span className="px-2 py-0.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-base)]">
+                      Live Mentorship
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-base)]">
+                      Production Codebases
+                    </span>
+                  </div>
                 </div>
                 <div className="pt-2.5 border-t border-[var(--border-base)] flex items-center justify-between font-body text-xs text-[var(--accent-tertiary)] font-semibold">
-                  <span>Explore cohorts</span>
+                  <span>Explore training</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </Link>
@@ -981,9 +1003,8 @@ export function Hero3D({
             ref={kickerRef}
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--border-base)] bg-[var(--bg-surface)]/80 backdrop-blur-md mb-6 shadow-xs"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] animate-pulse" />
-            <span className="font-mono text-[11px] tracking-widest uppercase text-[var(--text-secondary)] font-medium">
-              Digital Architecture & Research Studio
+            <span className="font-body text-xs text-[var(--text-secondary)] font-medium">
+              Software Studio · Bengaluru
             </span>
           </div>
 
@@ -1047,10 +1068,10 @@ export function Hero3D({
           {/* Division Showcase Section */}
           <div className="w-full max-w-4xl mx-auto flex flex-col items-center text-center mb-8">
             <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight mb-3 text-[var(--text-primary)] px-2">
-              Three things we do really well.
+              Three things we do really well
             </h2>
             <p className="font-body text-sm md:text-base text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed px-4">
-              Engineered from first principles with senior architects and dedicated focus.
+              Enterprise software platforms, specialized engineering pods, and technical academies.
             </p>
           </div>
 
@@ -1077,9 +1098,17 @@ export function Hero3D({
                 <h3 className="font-display font-bold text-lg text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent-primary)] transition-colors">
                   Products & Platforms
                 </h3>
-                <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-4">
+                <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-3">
                   Interactive tools, visual learning platforms, and curated networks built for everyday use.
                 </p>
+                <div className="flex flex-wrap gap-1.5 font-body text-[11px] text-[var(--text-muted)] mb-4">
+                  <span className="px-2 py-0.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-base)]">
+                    Event Mesh
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-base)]">
+                    DI Notes
+                  </span>
+                </div>
               </div>
               <div className="pt-3 border-t border-[var(--border-base)] flex items-center justify-between font-body text-xs text-[var(--accent-primary)] font-semibold group-hover:underline">
                 <span>Explore products</span>
@@ -1105,9 +1134,17 @@ export function Hero3D({
                 <h3 className="font-display font-bold text-lg text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent-secondary)] transition-colors">
                   Engineering Services
                 </h3>
-                <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-4">
+                <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-3">
                   Dedicated engineering teams building modern web applications, FastAPI backends, and cloud infrastructure.
                 </p>
+                <div className="flex flex-wrap gap-1.5 font-body text-[11px] text-[var(--text-muted)] mb-4">
+                  <span className="px-2 py-0.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-base)]">
+                    Web Applications
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-base)]">
+                    Cloud Infrastructure
+                  </span>
+                </div>
               </div>
               <div className="pt-3 border-t border-[var(--border-base)] flex items-center justify-between font-body text-xs text-[var(--accent-secondary)] font-semibold group-hover:underline">
                 <span>View services</span>
@@ -1133,9 +1170,17 @@ export function Hero3D({
                 <h3 className="font-display font-bold text-lg text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent-tertiary)] transition-colors">
                   Technical Training
                 </h3>
-                <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-4">
+                <p className="font-body text-xs text-[var(--text-secondary)] leading-relaxed mb-3">
                   Hands-on training in real-world systems architecture, backend engineering, and production codebases.
                 </p>
+                <div className="flex flex-wrap gap-1.5 font-body text-[11px] text-[var(--text-muted)] mb-4">
+                  <span className="px-2 py-0.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-base)]">
+                    Live Mentorship
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-base)]">
+                    Production Codebases
+                  </span>
+                </div>
               </div>
               <div className="pt-3 border-t border-[var(--border-base)] flex items-center justify-between font-body text-xs text-[var(--accent-tertiary)] font-semibold group-hover:underline">
                 <span>Explore training</span>

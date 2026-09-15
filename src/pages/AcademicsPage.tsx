@@ -13,7 +13,7 @@ import {
 import { GrainOverlay } from '../components/GrainOverlay'
 import { GlobalCanvasBackground } from '../components/ui/GlobalCanvasBackground'
 import { Footer } from '../components/Footer'
-import { TierNavbarDispatcher } from '../components/tiers/TierDispatcher'
+import { Navbar } from '../components/Navbar'
 import { CurriculumTerminal, CURRICULUM_DATA } from '../components/academics/CurriculumTerminal'
 
 export default function AcademicsPage() {
@@ -34,8 +34,8 @@ export default function AcademicsPage() {
       <GrainOverlay />
       <GlobalCanvasBackground />
 
-      {/* Unified Multi-Tier Navbar */}
-      <TierNavbarDispatcher />
+      {/* Modern Responsive Navbar */}
+      <Navbar />
 
       <main className="pt-20 sm:pt-28 pb-24 sm:pb-40 px-4 sm:px-8 md:px-12 max-w-[1240px] mx-auto relative z-10">
         {/* ── HEADER & HERO ── */}

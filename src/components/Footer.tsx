@@ -122,6 +122,16 @@ export function Footer({ onScrollTo, onReplayIntro }: FooterProps) {
               </li>
               <li>
                 <a
+                  href="https://www.linkedin.com/company/nayaklabs/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[var(--text-primary)] transition-colors"
+                >
+                  LinkedIn (company/nayaklabs) ↗
+                </a>
+              </li>
+              <li>
+                <a
                   href="https://www.instagram.com/nayaklabs.ai?stkn=MXd0eGJwcjVvZDB5dw=="
                   target="_blank"
                   rel="noopener noreferrer"

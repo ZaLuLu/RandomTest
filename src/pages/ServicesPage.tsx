@@ -3,7 +3,7 @@ import { Bot, Globe, Database, Palette, CheckCircle2, ArrowRight, Layers } from 
 import { GrainOverlay } from '../components/GrainOverlay'
 import { GlobalCanvasBackground } from '../components/ui/GlobalCanvasBackground'
 import { Footer } from '../components/Footer'
-import { TierNavbarDispatcher } from '../components/tiers/TierDispatcher'
+import { Navbar } from '../components/Navbar'
 import { ServiceArchitecturePreview } from '../components/services/ServiceArchitecturePreview'
 import { ProjectScopeEstimator } from '../components/services/ProjectScopeEstimator'
 
@@ -96,8 +96,8 @@ export default function ServicesPage() {
       <GrainOverlay />
       <GlobalCanvasBackground />
 
-      {/* Unified Multi-Tier Navbar */}
-      <TierNavbarDispatcher />
+      {/* Modern Responsive Navbar */}
+      <Navbar />
 
       {/* Main Content */}
       <main className="pt-20 sm:pt-28 pb-24 sm:pb-40 px-4 sm:px-8 md:px-12 max-w-[1240px] mx-auto relative z-10">

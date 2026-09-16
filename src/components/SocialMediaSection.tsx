@@ -14,7 +14,7 @@ import {
 } from 'lucide-react'
 import { useDeviceProfile } from '../utils/useDeviceProfile'
 import { ambientAudio } from '../utils/audioEngine'
-import nayakLabsLogoImg from '../../Nayaklabs_Logo.jpeg'
+import nayakLabsLogoImg from '../assets/Nayaklabs_Logo.jpeg'
 const nayakLabsImg = nayakLabsLogoImg
 
 export interface InstagramPost {
